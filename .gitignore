@@ -10,3 +10,5 @@ server/lib/build
 server/lib/log
 server/resources/scrap
 server/resources/parse-debug
+
+info.json
