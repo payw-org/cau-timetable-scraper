@@ -379,11 +379,13 @@ async function scrap_ClassList_All(page, infoSearch) {
               console.log('>> Search')
               // search
               await search_ClassList(page, infoSearchItem)
+              console.log('>>')
               // scrap class list and merge with existing class list
               classListScraped = classListScraped.concat(
                 await scrap_ClassList(page)
               )
-              page.screenshot({
+              console.log('>>')
+              await page.screenshot({
                 path:
                   a + '_' + b + '_' + c + '_' + d + '_' + e + '_' + f + '.png'
               })
