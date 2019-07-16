@@ -366,7 +366,7 @@ async function scrap_ClassList_All(page, infoSearch) {
           for (var e = 0; e < infoSearch['college'].length; e++) {
             for (var f = 0; f < infoSearch['major'].length; f++) {
               console.log('loop')
-              // set infoSearchItem
+              // set infoSearchItem.
               var infoSearchItem = {
                 year: infoSearch['year'][a],
                 semester: infoSearch['semester'][b],
