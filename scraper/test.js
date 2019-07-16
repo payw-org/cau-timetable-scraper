@@ -437,6 +437,5 @@ async function saveClassList(classListScraped) {
   // save class list
   await saveClassList(classListScraped)
 
-  await page.screenshot({ path: 'example.png' })
   await browser.close()
 })()
