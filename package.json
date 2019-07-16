@@ -16,7 +16,9 @@
     "url": "https://github.com/payasyouwant/eodiro-crawler/issues"
   },
   "homepage": "https://github.com/payasyouwant/eodiro-crawler#readme",
-  "devDependencies": {
+  "devDependencies": {},
+  "dependencies": {
+    "app-root-path": "^2.2.1",
     "puppeteer": "^1.18.1"
   }
 }

@@ -3,13 +3,15 @@ const fs = require('fs')
 const appRoot = require('app-root-path')
 var account = require(appRoot + '/resource/info.json')
 
+var delay = 100 // 50 also success
+
 var searchInfo = {
   year: '2019',
   semester: '1',
   course: '학부',
   campus: '서울',
-  college: '소프트웨어대학',
-  major: '소프트웨어학부',
+  college: '',
+  major: '',
   className: ''
 }
 
@@ -50,7 +52,7 @@ async function loginAdmin(page, account) {
     account.admin.PW
   )
   await page.click('.btn-login')
-  await page.waitForSelector('.nb-font-13')
+  await page.waitFor(1000)
 }
 
 /**
@@ -58,13 +60,9 @@ async function loginAdmin(page, account) {
  * @param {*} page
  * @param {*} selector
  * @param {*} index
- * select selectTag in page and delay (100ms)
+ * select selectTag in page and delay
  */
 async function select_selectTag(page, selector, index) {
-  console.log(selector + ' option:nth-child(' + index + ')')
-  console.log(index)
-  var delay = 100 // 50 also success
-
   // select option
   await page.evaluate(
     (selector, index) => {
@@ -82,7 +80,11 @@ async function select_selectTag(page, selector, index) {
     element.dispatchEvent(new Event('change'))
   }, selector)
 
-  await page.waitFor(delay)
+  // await page.waitFor(30)
+  await page.waitForFunction(
+    'document.querySelector(".sp-loading-wrap").style.display != "block"',
+    { polling: 'mutation', timeout: 0 }
+  )
 }
 
 /**
@@ -105,7 +107,13 @@ async function search_ClassList(page, infoSearchItem) {
       .querySelector('.nb-search-submit')
       .children[0].children[0].children[0].click()
   })
-  await page.waitFor(3000)
+  await page.waitForFunction(
+    'document.querySelector(".sp-loading-wrap").style.display != "block"',
+    {
+      polling: 'mutation',
+      timeout: 0
+    }
+  )
 }
 
 /**
@@ -125,6 +133,7 @@ async function scrap_ClassList(page) {
       .children[0].children[1].children[0].children.length
   })
 
+  console.log('>> ' + length_ClassList + ' line would be scraped.')
   for (var i = 0; i < length_ClassList; i++) {
     classItemScraped = new Object()
     classItemScraped['과목번호-분반'] = await page.evaluate(index => {
@@ -149,6 +158,7 @@ async function scrap_ClassList(page) {
     }, i)
 
     classListScraped.push(classItemScraped)
+    process.stdout.write('.')
   }
 
   return classListScraped
@@ -270,73 +280,27 @@ async function change_InfoSearch_ToIndex_withArray(page, infoSearch) {
  * @param {*} infoSearch
  * fill in empty attribute of infoSearch with index 1~max
  */
-async function fill_Empty_InfoSearch_withArray(page, infoSearch) {
+async function fill_InfoSearch_WithArray(
+  page,
+  infoSearch,
+  selector,
+  selectorId
+) {
   var length
+  var i
+  if (infoSearch[selector] == '') {
+    // get num of option on select tag
+    length = await page.evaluate(selectorId => {
+      return document.querySelector(selectorId).children.length
+    }, selectorId)
 
-  if (infoSearch['year'] == '') {
-    // get num of option on select tag
-    length = await page.evaluate(() => {
-      return document.querySelector('#sel_year').children.length
-    })
     // add index to searchInfo
-    infoSearch['year'] = new Array()
-    for (var i = 1; i <= length; i++) {
-      infoSearch['year'].push(i)
-    }
-  }
-  if (infoSearch['semester'] == '') {
-    // get num of option on select tag
-    length = await page.evaluate(() => {
-      return document.querySelector('#sel_shtm').children.length
-    })
-    // add index to searchInfo
-    infoSearch['semester'] = new Array()
-    for (var i = 1; i <= length; i++) {
-      infoSearch['semester'].push(i)
-    }
-  }
-  if (infoSearch['course'] == '') {
-    // get num of option on select tag
-    length = await page.evaluate(() => {
-      return document.querySelector('#sel_course').children.length
-    })
-    // add index to searchInfo
-    infoSearch['course'] = new Array()
-    for (var i = 1; i <= length; i++) {
-      infoSearch['course'].push(i)
-    }
-  }
-  if (infoSearch['campus'] == '') {
-    // get num of option on select tag
-    length = await page.evaluate(() => {
-      return document.querySelector('#sel_camp').children.length
-    })
-    // add index to searchInfo
-    infoSearch['campus'] = new Array()
-    for (var i = 1; i <= length; i++) {
-      infoSearch['campus'].push(i)
-    }
-  }
-  if (infoSearch['college'] == '') {
-    // get num of option on select tag
-    length = await page.evaluate(() => {
-      return document.querySelector('#sel_colg').children.length
-    })
-    // add index to searchInfo
-    infoSearch['college'] = new Array()
-    for (var i = 1; i <= length; i++) {
-      infoSearch['college'].push(i)
-    }
-  }
-  if (infoSearch['major'] == '') {
-    // get num of option on select tag
-    length = await page.evaluate(() => {
-      return document.querySelector('#sel_sust').children.length
-    })
-    // add index to searchInfo
-    infoSearch['major'] = new Array()
-    for (var i = 1; i <= length; i++) {
-      infoSearch['major'].push(i)
+    infoSearch[selector] = new Array()
+    i = 1
+    if (selector == 'campus' || selector == 'college' || selector == 'major')
+      i++
+    for (i; i <= length; i++) {
+      infoSearch[selector].push(i)
     }
   }
 
@@ -352,20 +316,56 @@ async function fill_Empty_InfoSearch_withArray(page, infoSearch) {
 async function scrap_ClassList_All(page, infoSearch) {
   var classListScraped = new Array()
 
-  console.log(infoSearch)
   infoSearch = await change_InfoSearch_ToIndex_withArray(page, infoSearch)
-  console.log(infoSearch)
-  infoSearch = await fill_Empty_InfoSearch_withArray(page, infoSearch)
-  console.log(infoSearch)
-  console.log('Finished')
+  console.log('>> Changing infoSearch to index is finished.')
 
+  infoSearch = await fill_InfoSearch_WithArray(
+    page,
+    infoSearch,
+    'year',
+    '#sel_year'
+  )
   for (var a = 0; a < infoSearch['year'].length; a++) {
+    await select_selectTag(page, '#sel_year', infoSearch['year'][a])
+    infoSearch = await fill_InfoSearch_WithArray(
+      page,
+      infoSearch,
+      'semster',
+      '#sel_shtm'
+    )
     for (var b = 0; b < infoSearch['semester'].length; b++) {
+      await select_selectTag(page, '#sel_shtm', infoSearch['semester'][b])
+      infoSearch = await fill_InfoSearch_WithArray(
+        page,
+        infoSearch,
+        'course',
+        '#sel_course'
+      )
       for (var c = 0; c < infoSearch['course'].length; c++) {
+        await select_selectTag(page, '#sel_course', infoSearch['course'][c])
+        infoSearch = await fill_InfoSearch_WithArray(
+          page,
+          infoSearch,
+          'campus',
+          '#sel_camp'
+        )
         for (var d = 0; d < infoSearch['campus'].length; d++) {
+          await select_selectTag(page, '#sel_camp', infoSearch['campus'][d])
+          infoSearch = await fill_InfoSearch_WithArray(
+            page,
+            infoSearch,
+            'college',
+            '#sel_colg'
+          )
           for (var e = 0; e < infoSearch['college'].length; e++) {
+            await select_selectTag(page, '#sel_colg', infoSearch['college'][e])
+            infoSearch = await fill_InfoSearch_WithArray(
+              page,
+              infoSearch,
+              'major',
+              '#sel_sust'
+            )
             for (var f = 0; f < infoSearch['major'].length; f++) {
-              console.log('loop')
               // set infoSearchItem.
               var infoSearchItem = {
                 year: infoSearch['year'][a],
@@ -376,16 +376,27 @@ async function scrap_ClassList_All(page, infoSearch) {
                 major: infoSearch['major'][f]
               }
 
+              console.log('>> Search')
               // search
               await search_ClassList(page, infoSearchItem)
               // scrap class list and merge with existing class list
-              classListScraped.concat(await scrap_ClassList(page))
-              console.log(classListScraped)
+              classListScraped = classListScraped.concat(
+                await scrap_ClassList(page)
+              )
+              page.screenshot({
+                path:
+                  a + '_' + b + '_' + c + '_' + d + '_' + e + '_' + f + '.png'
+              })
             }
+            infoSearch['major'] = ''
           }
+          infoSearch['college'] = ''
         }
+        infoSearch['campus'] = ''
       }
+      infoSearch['cours'] = ''
     }
+    infoSearch['semester'] = ''
   }
 
   return classListScraped
