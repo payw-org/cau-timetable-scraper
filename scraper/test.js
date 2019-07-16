@@ -111,7 +111,6 @@ async function search_ClassList(page, infoSearchItem) {
 /**
  *
  * @param {*} page
- * @returns {Array}
  * scrap class list with column 5,6,8,9.
  * each column match with 과목번호-분반, 과목명, 담당교수, 강의실/강의시간
  */
@@ -358,20 +357,15 @@ async function scrap_ClassList_All(page, infoSearch) {
   console.log(infoSearch)
   infoSearch = await fill_Empty_InfoSearch_withArray(page, infoSearch)
   console.log(infoSearch)
+  console.log('Finished')
 
-  console.log(infoSearch['year'].length)
-  console.log(infoSearch['semester'].length)
-  console.log(infoSearch['course'].length)
-  console.log(infoSearch['campus'].length)
-  console.log(infoSearch['college'].length)
-  console.log(infoSearch['major'].length)
   for (var a = 0; a < infoSearch['year'].length; a++) {
     for (var b = 0; b < infoSearch['semester'].length; b++) {
       for (var c = 0; c < infoSearch['course'].length; c++) {
         for (var d = 0; d < infoSearch['campus'].length; d++) {
           for (var e = 0; e < infoSearch['college'].length; e++) {
             for (var f = 0; f < infoSearch['major'].length; f++) {
-              console.log('goal')
+              console.log('loop')
               // set infoSearchItem
               var infoSearchItem = {
                 year: infoSearch['year'][a],
@@ -385,7 +379,8 @@ async function scrap_ClassList_All(page, infoSearch) {
               // search
               await search_ClassList(page, infoSearchItem)
               // scrap class list and merge with existing class list
-              // classListScraped.concat(await scrap_ClassList(page))
+              classListScraped.concat(await scrap_ClassList(page))
+              console.log(classListScraped)
             }
           }
         }
