@@ -1,12 +1,11 @@
 const puppeteer = require('puppeteer')
 const fs = require('fs')
 const appRoot = require('app-root-path')
-const portal = require('./portal.js')
-var account = require(appRoot + '/resource/info.json')
+var account = require(appRoot + '/info.json')
 
 var searchInfo = {
   year: '2019',
-  semester: '1',
+  semester: '2',
   course: '학부',
   campus: '서울',
   college: '소프트웨어대학',

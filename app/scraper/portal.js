@@ -31,7 +31,7 @@ var fileName =
  * @param {*} account
  * login cau portal with admin account
  */
-module.exports = async function loginAdmin(page, account) {
+module.exports.loginAdmin = async function loginAdmin(page, account) {
   // go to login page
   await page.goto(
     'https://mportal.cau.ac.kr/common/auth/SSOlogin.do?redirectUrl=/main.do'
@@ -58,7 +58,7 @@ module.exports = async function loginAdmin(page, account) {
  * @param {*} index
  * select selectTag in page and delay (100ms)
  */
-module.exports = async function select_selectTag(page, selector, index) {
+module.exports.select_selectTag = async function select_selectTag(page, selector, index) {
   console.log(selector + ' option:nth-child(' + index + ')')
   console.log(index)
   var delay = 100 // 50 also success
@@ -89,7 +89,7 @@ module.exports = async function select_selectTag(page, selector, index) {
  * @param {*} infoSearchItem
  * search class list with selecting select tag and click search button
  */
-module.exports = async function search_ClassList(page, infoSearchItem) {
+module.exports.search_ClassList = async function search_ClassList(page, infoSearchItem) {
   await select_selectTag(page, '#sel_year', infoSearchItem['year'])
   await select_selectTag(page, '#sel_shtm', infoSearchItem['semester'])
   await select_selectTag(page, '#sel_course', infoSearchItem['course'])
@@ -112,7 +112,7 @@ module.exports = async function search_ClassList(page, infoSearchItem) {
  * scrap class list with column 5,6,8,9.
  * each column match with 과목번호-분반, 과목명, 담당교수, 강의실/강의시간
  */
-module.exports = async function scrap_ClassList(page) {
+module.exports.scrap_ClassList = async function scrap_ClassList(page) {
   var classListScraped = new Array()
   var classItemScraped
   var length_ClassList
@@ -152,7 +152,7 @@ module.exports = async function scrap_ClassList(page) {
   return classListScraped
 }
 
-module.exports = async function change_InfoSearch_ToIndex_withArray(page, infoSearch) {
+module.exports.change_InfoSearch_ToIndex_withArray = async function change_InfoSearch_ToIndex_withArray(page, infoSearch) {
   var string_SelectTag_Item
   var length_SelectTag_List
 
@@ -268,7 +268,7 @@ module.exports = async function change_InfoSearch_ToIndex_withArray(page, infoSe
  * @param {*} infoSearch
  * fill in empty attribute of infoSearch with index 1~max
  */
-module.exports = async function fill_Empty_InfoSearch_withArray(page, infoSearch) {
+module.exports.fill_Empty_InfoSearch_withArray = async function fill_Empty_InfoSearch_withArray(page, infoSearch) {
   var length
 
   if (infoSearch['year'] == '') {
@@ -347,7 +347,7 @@ module.exports = async function fill_Empty_InfoSearch_withArray(page, infoSearch
  * @param {*} infoSearch
  * fill in select tag and click search to show class list
  */
-module.exports = async function scrap_ClassList_All(page, infoSearch) {
+module.exports.scrap_ClassList_All = async function scrap_ClassList_All(page, infoSearch) {
   var classListScraped = new Array()
 
   console.log(infoSearch)
@@ -389,7 +389,7 @@ module.exports = async function scrap_ClassList_All(page, infoSearch) {
   return classListScraped
 }
 
-module.exports = async function saveClassList(classListScraped) {
+module.exports.saveClassList = async function saveClassList(classListScraped) {
   var classListScrapedString = JSON.stringify(classListScraped)
 
   fs.writeFileSync(
