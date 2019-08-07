@@ -268,9 +268,11 @@ async function saveClassList(classListScraped) {
   )
 }
 
-async function change_InfoSearch_ToIndex_withArray(page, infoSearch) {
+async function change_InfoSearch_ToIndex_withArray(page, infoSearchOrigin) {
   var string_SelectTag_Item
   var length_SelectTag_List
+  var infoSearch = new Object()
+  Object.assign(infoSearch, infoSearchOrigin)
 
   // year
   if (infoSearch['year'] != '') {
