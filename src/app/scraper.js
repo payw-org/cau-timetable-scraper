@@ -4,7 +4,7 @@ const portal = require(appRoot + '/src/module/scrap-portal.js')
 const searchInfo = require(appRoot + '/src/config/searchInfo.json')
 const account = require(appRoot + '/src/config/info.json')
 
-;(async () => {
+module.exports.run = async () => {
   // creat new page
   const browser = await puppeteer.launch({ args: ['--no-sandbox'] })
   const page = await browser.newPage()
@@ -29,4 +29,4 @@ const account = require(appRoot + '/src/config/info.json')
   await portal.saveClassList(classListScraped)
 
   await browser.close()
-})()
+}
