@@ -1,10 +1,11 @@
 var appRoot = require('app-root-path')
+var fs = require('fs')
+
 const parseCau = require(appRoot + '/src/module/parse-cau.js')
-const scrapedData = require(appRoot +
-  '/src/resource/scraped/2019-2-학부-서울-소프트웨어대학-.json')
 
 
-module.exports.run = () => {
+module.exports.run = (fileName) => {
+  const scrapedData = JSON.parse(fs.readFileSync(appRoot + '/src/resource/scraped/' + fileName,'utf8'))
   var courseArray = new Array()
 
   var course
@@ -42,4 +43,5 @@ module.exports.run = () => {
   
   parseCau.createFile(courseArray)
   
+  return fileName
 }
