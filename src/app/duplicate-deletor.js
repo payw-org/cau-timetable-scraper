@@ -1,8 +1,7 @@
 const fs = require('fs')
 const appRoot = require('app-root-path')
-const fileName = '/src/resource/scraped/2019-2-학부-서울--'
-
-var data = JSON.parse(fs.readFileSync(appRoot + fileName + '.json', 'utf-8'))
+const fileName = '/src/resource/scraped/2019-2-학부-서울-소프트웨어대학-'
+var data = require(appRoot + fileName + '.json')
 
 function arrIndexOf(arr, item) {
   var length = arr.length
@@ -27,8 +26,11 @@ async function delete_duplicate(data) {
   })
 }
 
-;(async function() {
+module.exports.run = async function() {
   data = await delete_duplicate(data)
 
   fs.writeFileSync(appRoot + fileName + 'done.json', JSON.stringify(data))
-})()
+}
+
+module.exports.delete_duplicate = delete_duplicate
+module.exports.arrIndexOf = arrIndexOf
