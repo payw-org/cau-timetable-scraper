@@ -1,7 +1,5 @@
 const fs = require('fs')
 const appRoot = require('app-root-path')
-const fileName = '/src/resource/scraped/2019-2-학부-서울-소프트웨어대학-'
-var data = require(appRoot + fileName + '.json')
 
 function arrIndexOf(arr, item) {
   var length = arr.length
@@ -26,10 +24,13 @@ async function delete_duplicate(data) {
   })
 }
 
-module.exports.run = async function() {
-  data = await delete_duplicate(data)
+module.exports.run = async function(fileName) {
+  var scrapedData = JSON.parse(fs.readFileSync(appRoot + '/src/resource/scraped/' + fileName,'utf8'))
+  scrapedData = await delete_duplicate(scrapedData)
+  fileName = fileName.replace('.json','done.json')
+  fs.writeFileSync(appRoot + '/src/resource/scraped/' + fileName, JSON.stringify(scrapedData))
 
-  fs.writeFileSync(appRoot + fileName + 'done.json', JSON.stringify(data))
+  return fileName
 }
 
 module.exports.delete_duplicate = delete_duplicate
