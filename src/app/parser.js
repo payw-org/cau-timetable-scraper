@@ -4,7 +4,7 @@ const scrapedData = require(appRoot +
   '/src/resource/scraped/2019-2-학부-서울-소프트웨어대학-.json')
 
 
-module.exports.run = () => {
+module.exports.run = async () => {
   var courseArray = new Array()
 
   var course
