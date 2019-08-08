@@ -1,6 +1,5 @@
 const fs = require('fs')
 const appRoot = require('app-root-path')
-const searchInfo = require(appRoot + '/src/config/searchInfo.json')
 
 /**
  *
@@ -247,21 +246,8 @@ async function scrap_ClassList_All(page, infoSearch) {
   return classListScraped
 }
 
-async function saveClassList(classListScraped) {
+async function saveClassList(classListScraped, fileName) {
   var classListScrapedString = JSON.stringify(classListScraped)
-  var fileName =
-    searchInfo['year'] +
-    '-' +
-    searchInfo['semester'] +
-    '-' +
-    searchInfo['course'] +
-    '-' +
-    searchInfo['campus'] +
-    '-' +
-    searchInfo['college'] +
-    '-' +
-    searchInfo['major'] +
-    '.json'
   fs.writeFileSync(
     appRoot + '/src/resource/scraped/' + fileName,
     classListScrapedString
@@ -413,6 +399,21 @@ async function fill_InfoSearch_WithArray(
   return infoSearch
 }
 
+function getDataName(data){
+  var paramList = Object.getOwnPropertyNames(data)
+  var dataName = ""
+  
+  for(var i=0; i<paramList.length; i++){
+    dataName += data[paramList[i]]
+    if(i+1 < paramList.length)
+      dataName += '-'
+    else
+      dataName += '.json'
+  }
+  
+  return dataName
+}
+
 module.exports.saveClassList = saveClassList
 module.exports.scrap_ClassList_All = scrap_ClassList_All
 module.exports.scrap_ClassList = scrap_ClassList
@@ -421,3 +422,4 @@ module.exports.select_selectTag = select_selectTag
 module.exports.loginAdmin = loginAdmin
 module.exports.fill_InfoSearch_WithArray = fill_InfoSearch_WithArray
 module.exports.change_InfoSearch_ToIndex_withArray = change_InfoSearch_ToIndex_withArray
+module.exports.getDataName = getDataName
