@@ -17,14 +17,13 @@ const duplicateDeletor = require(appRoot + '/src/app/duplicate-deletor.js')
 // })
 
 var schedule = require('node-schedule');
-
 function getDataName(){
-  var searchInfo = JSON.parse(fs.readFileSync(appRoot + '/src/config/searchInfo.js','utf8'))
+  var searchInfo = JSON.parse(fs.readFileSync(appRoot + '/src/config/searchInfo.json','utf8'))
   var paramList = Object.getOwnPropertyNames(searchInfo)
   var dataName = ""
   
   for(var i=0; i<paramList.length; i++){
-    dataName += searchInfo[paramLst[i]]
+    dataName += searchInfo[paramList[i]]
     if(i+1 < paramList.length)
       dataName += '-'
     else
@@ -35,7 +34,6 @@ function getDataName(){
 }
  
 var j = schedule.scheduleJob('*/30 * * * * *', async function(){
-  console.log(getDataName())
   console.log('Play!')
   await scraper.run()
   await duplicateDeletor.run()

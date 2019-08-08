@@ -1,34 +1,6 @@
 const fs = require('fs')
 const appRoot = require('app-root-path')
-<<<<<<< HEAD:app/scraper/index.js
-var account = require(appRoot + '/info.json')
-
-var searchInfo = {
-  year: '2019',
-  semester: '2',
-  course: '학부',
-  campus: '서울',
-  college: '소프트웨어대학',
-  major: '소프트웨어학부',
-  className: ''
-}
-
-var fileName =
-  searchInfo['year'] +
-  '_' +
-  searchInfo['semester'] +
-  '_' +
-  searchInfo['course'] +
-  '_' +
-  searchInfo['campus'] +
-  '_' +
-  searchInfo['college'] +
-  '_' +
-  searchInfo['major'] +
-  '.json'
-=======
 const searchInfo = require(appRoot + '/src/config/searchInfo.json')
->>>>>>> scraper:src/module/scrap-portal.js
 
 /**
  *
