@@ -202,6 +202,21 @@ function createFile(src) {
   fs.writeFileSync(app_path + '/src/resource/parsed/result.json', src)
 }
 
+function getDataName(data){
+  var paramList = Object.getOwnPropertyNames(data)
+  var dataName = ""
+  
+  for(var i=0; i<paramList.length; i++){
+    dataName += searchInfo[paramList[i]]
+    if(i+1 < paramList.length)
+      dataName += '-'
+    else
+      dataName += '.json'
+  }
+  
+  return dataName
+}
+
 module.exports.createFile = createFile
 module.exports.parseToSend = parseToSend
 module.exports.parseClassRoom_Time = parseClassRoom_Time
@@ -210,3 +225,4 @@ module.exports.mergeRooms = mergeRooms
 module.exports.mergeTimes = mergeTimes
 module.exports.parseDayToDay = parseDayToDay
 module.exports.parseIntToTime = parseIntToTime
+module.exports.getDataName = getDataName
