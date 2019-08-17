@@ -12,4 +12,8 @@ server/resources/scrap
 server/resources/parse-debug
 
 src/screenshots/
+src/resource/parsed/*
+src/resource/scraped/*
+!src/resource/parsed/index.js
+!src/resource/scraped/index.js
 info.json
