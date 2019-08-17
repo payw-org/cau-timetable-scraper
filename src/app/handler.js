@@ -35,7 +35,7 @@ function getDataName(){
 }
 
 
-var j = schedule.scheduleJob('*/30 * * * * *', async function(){
+var j = schedule.scheduleJob('0 4 * * * *', async function(){
   console.log('Play!')
   var fileNameReturn
   fileNameReturn = await scraper.run()
