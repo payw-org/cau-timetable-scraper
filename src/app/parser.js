@@ -26,6 +26,7 @@ module.exports.run = (fileName) => {
     classId_DivNo = classId_DivNo.split('-')
     classRoom_Time = parseCau.parseClassRoom_Time(classRoom)
   
+    // main data
     course.course_no = classId_DivNo[0]
     course.class_no = classId_DivNo[1]
     course.name = className
@@ -33,6 +34,18 @@ module.exports.run = (fileName) => {
     course.room = classRoom_Time[0]
     course.time = classRoom_Time[1]
   
+    // etc data
+    course.college = scrapedData[i]['대학']
+    course.subject = scrapedData[i]['개설학과']
+    course.grade = scrapedData[i]['학년']
+    course.course = scrapedData[i]['과정']
+    course.type = scrapedData[i]['이수구분']
+    course.unit = scrapedData[i]['학점']
+    course.term = scrapedData[i]['시간']
+    course.closed = scrapedData[i]['폐강']
+    course.flexible = scrapedData[i]['유연학기']
+    course.note = scrapedData[i]['비고']
+
     if (course.room != '' && course.time != '') {
       // 재택강의 제거
       courseArray.push(course)
@@ -41,7 +54,7 @@ module.exports.run = (fileName) => {
   
   courseArray = parseCau.parseToSend(courseArray)
   
-  parseCau.createFile(courseArray)
+  parseCau.createFile(courseArray,fileName)
   
   return fileName
 }
