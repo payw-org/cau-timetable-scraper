@@ -11,5 +11,5 @@ server/lib/log
 server/resources/scrap
 server/resources/parse-debug
 
-screenshots/
+src/screenshots/
 info.json
