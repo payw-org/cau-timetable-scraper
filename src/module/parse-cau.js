@@ -172,6 +172,21 @@ function parseToSend(src) {
     course.name = item['name']
     course.instructor = item['instructor']
 
+    // etc data
+    course.college = item['college']
+    course.subject = item['subject']
+    course.grade = item['grade']
+    course.course = item['course']
+    course.type = item['type']
+    course.unit = item['unit']
+    course.term = item['term']
+    if(item['closed'] == "폐강")
+      course.closed = true
+    else
+      course.closed = false
+    course.flexible = item['flexible']
+    course.note = item['note']
+
     course.locations = new Array()
     item['room'].forEach(function(item2, index) {
       location = new Object()
@@ -196,10 +211,11 @@ function parseToSend(src) {
   return newSrc
 }
 
-function createFile(src) {
+function createFile(src, fileName) {
   src = JSON.stringify(src)
   var fs = require('fs')
-  fs.writeFileSync(app_path + '/src/resource/parsed/result.json', src)
+  fileName = fileName.replace('done.json','complete.json')
+  fs.writeFileSync(app_path + '/src/resource/parsed/' + fileName , src)
 }
 
 function getDataName(data){
