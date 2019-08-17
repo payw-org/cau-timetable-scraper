@@ -106,6 +106,8 @@ async function scrap_ClassList(page) {
   })
 
   console.log('>> ' + length_ClassList + ' line would be scraped.')
+  
+  // scrap main data
   for (var i = 0; i < length_ClassList; i++) {
     classItemScraped = new Object()
     classItemScraped['과목번호-분반'] = await page.evaluate(index => {
@@ -129,6 +131,58 @@ async function scrap_ClassList(page) {
         .innerText
     }, i)
 
+    // scrap etc data
+    classItemScraped['대학'] = await page.evaluate(index => {
+      return document.querySelector('.section-gap').children[0].children[0]
+        .children[0].children[1].children[0].children[index].children[0]
+        .innerText
+    }, i)
+    classItemScraped['개설학과'] = await page.evaluate(index => {
+      return document.querySelector('.section-gap').children[0].children[0]
+        .children[0].children[1].children[0].children[index].children[1]
+        .innerText
+    }, i)
+    classItemScraped['학년'] = await page.evaluate(index => {
+      return document.querySelector('.section-gap').children[0].children[0]
+        .children[0].children[1].children[0].children[index].children[2]
+        .innerText
+    }, i)
+    classItemScraped['과정'] = await page.evaluate(index => {
+      return document.querySelector('.section-gap').children[0].children[0]
+        .children[0].children[1].children[0].children[index].children[3]
+        .innerText
+    }, i)
+    classItemScraped['이수구분'] = await page.evaluate(index => {
+      return document.querySelector('.section-gap').children[0].children[0]
+        .children[0].children[1].children[0].children[index].children[4]
+        .innerText
+    }, i)
+    classItemScraped['학점'] = await page.evaluate(index => {
+      return document.querySelector('.section-gap').children[0].children[0]
+        .children[0].children[1].children[0].children[index].children[7]
+        .innerText.split('-')[0]
+    }, i)
+    classItemScraped['시간'] = await page.evaluate(index => {
+      return document.querySelector('.section-gap').children[0].children[0]
+        .children[0].children[1].children[0].children[index].children[7]
+        .innerText.split('-')[1]
+    }, i)
+    classItemScraped['폐강'] = await page.evaluate(index => {
+      return document.querySelector('.section-gap').children[0].children[0]
+        .children[0].children[1].children[0].children[index].children[9]
+        .innerText
+    }, i)
+    classItemScraped['유연학기'] = await page.evaluate(index => {
+      return document.querySelector('.section-gap').children[0].children[0]
+        .children[0].children[1].children[0].children[index].children[11]
+        .innerText
+    }, i)
+    classItemScraped['비고'] = await page.evaluate(index => {
+      return document.querySelector('.section-gap').children[0].children[0]
+        .children[0].children[1].children[0].children[index].children[12]
+        .innerText
+    }, i)
+
     classListScraped.push(classItemScraped)
     process.stdout.write('.')
   }
@@ -146,7 +200,6 @@ async function scrap_ClassList_All(page, infoSearch) {
   var classListScraped = new Array()
 
   infoSearch = await change_InfoSearch_ToIndex_withArray(page, infoSearch)
-  console.log('>> Changing infoSearch to index is finished.')
 
   infoSearch = await fill_InfoSearch_WithArray(
     page,
@@ -208,7 +261,6 @@ async function scrap_ClassList_All(page, infoSearch) {
               console.log('>> Search')
               // search
               await search_ClassList(page, infoSearchItem)
-              console.log('>>')
               // scrap class list and merge with existing class list
               classListScraped = classListScraped.concat(
                 await scrap_ClassList(page)
