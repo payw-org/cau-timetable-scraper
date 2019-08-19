@@ -1,12 +1,11 @@
 const axios = require('axios')
 const appRoot = require('app-root-path')
 const fs = require('fs')
-const schedule = require('node-schedule');
+const schedule = require('node-schedule')
 
 const scraper = require(appRoot + '/src/app/scraper.js')
 const parser = require(appRoot + '/src/app/parser.js')
 const duplicateDeletor = require(appRoot + '/src/app/duplicate-deletor.js')
-
 
 // const processedData = require(appRoot +
 //   '/src/resource/parsed/2019-2-학부-서울--done')
@@ -19,30 +18,27 @@ const duplicateDeletor = require(appRoot + '/src/app/duplicate-deletor.js')
 //   }
 // })
 
-function getDataName(){
+function getDataName() {
   var paramList = Object.getOwnPropertyNames(searchInfo)
-  var dataName = ""
-  
-  for(var i=0; i<paramList.length; i++){
+  var dataName = ''
+
+  for (var i = 0; i < paramList.length; i++) {
     dataName += searchInfo[paramList[i]]
-    if(i+1 < paramList.length)
-      dataName += '-'
-    else
-      dataName += '.json'
+    if (i + 1 < paramList.length) dataName += '-'
+    else dataName += '.json'
   }
-  
+
   return dataName
 }
 
-
-var j = schedule.scheduleJob('0 4 * * * *', async function(){
+var j = schedule.scheduleJob('50 1 * * * *', async function() {
   console.log('Play!')
   var fileNameReturn
   fileNameReturn = await scraper.run()
-  if(fileNameReturn != null){
+  if (fileNameReturn != null) {
     console.log('Scraped new data')
     fileNameReturn = await duplicateDeletor.run(fileNameReturn)
     fileNameReturn = await parser.run(fileNameReturn)
   }
   console.log('Done')
-});
+})
