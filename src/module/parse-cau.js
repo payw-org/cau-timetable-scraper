@@ -25,7 +25,7 @@ function mergeTimes(src) {
   var startOfTime = ''
   var endOfTime = ''
   var day = ''
- 
+
   src.forEach(function(item, index) {
     // time integration
 
@@ -168,7 +168,7 @@ function parseToSend(src) {
   src.forEach(function(item, index) {
     course = new Object()
 
-    course.class_id = item['course_no'] + '-' + item['class_no']
+    course.classId = item['course_no'] + '-' + item['class_no']
     course.name = item['name']
     course.instructor = item['instructor']
 
@@ -180,10 +180,8 @@ function parseToSend(src) {
     course.type = item['type']
     course.unit = item['unit']
     course.term = item['term']
-    if(item['closed'] == "폐강")
-      course.closed = true
-    else
-      course.closed = false
+    if (item['closed'] == '폐강') course.closed = true
+    else course.closed = false
     course.flexible = item['flexible']
     course.note = item['note']
 
@@ -214,22 +212,20 @@ function parseToSend(src) {
 function createFile(src, fileName) {
   src = JSON.stringify(src)
   var fs = require('fs')
-  fileName = fileName.replace('done.json','complete.json')
-  fs.writeFileSync(app_path + '/src/resource/parsed/' + fileName , src)
+  fileName = fileName.replace('done.json', 'complete.json')
+  fs.writeFileSync(app_path + '/src/resource/parsed/' + fileName, src)
 }
 
-function getDataName(data){
+function getDataName(data) {
   var paramList = Object.getOwnPropertyNames(data)
-  var dataName = ""
-  
-  for(var i=0; i<paramList.length; i++){
+  var dataName = ''
+
+  for (var i = 0; i < paramList.length; i++) {
     dataName += searchInfo[paramList[i]]
-    if(i+1 < paramList.length)
-      dataName += '-'
-    else
-      dataName += '.json'
+    if (i + 1 < paramList.length) dataName += '-'
+    else dataName += '.json'
   }
-  
+
   return dataName
 }
 
