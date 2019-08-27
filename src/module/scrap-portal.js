@@ -35,6 +35,8 @@ async function loginAdmin(page, account) {
  * select selectTag in page and delay
  */
 async function select_selectTag(page, selector, index) {
+  // wait
+  await page.waitForSelector(selector + ' option:nth-child(' + index + ')')
   // select option
   await page.evaluate(
     (selector, index) => {
@@ -106,7 +108,7 @@ async function scrap_ClassList(page) {
   })
 
   console.log('>> ' + length_ClassList + ' line would be scraped.')
-  
+
   // scrap main data
   for (var i = 0; i < length_ClassList; i++) {
     classItemScraped = new Object()
@@ -158,14 +160,18 @@ async function scrap_ClassList(page) {
         .innerText
     }, i)
     classItemScraped['학점'] = await page.evaluate(index => {
-      return document.querySelector('.section-gap').children[0].children[0]
-        .children[0].children[1].children[0].children[index].children[7]
-        .innerText.split('-')[0]
+      return document
+        .querySelector('.section-gap')
+        .children[0].children[0].children[0].children[1].children[0].children[
+          index
+        ].children[7].innerText.split('-')[0]
     }, i)
     classItemScraped['시간'] = await page.evaluate(index => {
-      return document.querySelector('.section-gap').children[0].children[0]
-        .children[0].children[1].children[0].children[index].children[7]
-        .innerText.split('-')[1]
+      return document
+        .querySelector('.section-gap')
+        .children[0].children[0].children[0].children[1].children[0].children[
+          index
+        ].children[7].innerText.split('-')[1]
     }, i)
     classItemScraped['폐강'] = await page.evaluate(index => {
       return document.querySelector('.section-gap').children[0].children[0]
@@ -451,18 +457,16 @@ async function fill_InfoSearch_WithArray(
   return infoSearch
 }
 
-function getDataName(data){
+function getDataName(data) {
   var paramList = Object.getOwnPropertyNames(data)
-  var dataName = ""
-  
-  for(var i=0; i<paramList.length; i++){
+  var dataName = ''
+
+  for (var i = 0; i < paramList.length; i++) {
     dataName += data[paramList[i]]
-    if(i+1 < paramList.length)
-      dataName += '-'
-    else
-      dataName += '.json'
+    if (i + 1 < paramList.length) dataName += '-'
+    else dataName += '.json'
   }
-  
+
   return dataName
 }
 
