@@ -14,6 +14,7 @@ module.exports.run = fileName => {
 
   for (i = 0; i < scrapedData.length; i++) {
     course = new Object()
+    classList = new Array()
 
     classRoom_Time = parseCau.parseClassRoom_Time(
       scrapedData[i]['강의실/강의시간']
@@ -39,6 +40,16 @@ module.exports.run = fileName => {
     course.flexible = scrapedData[i]['유연학기']
     course.note = scrapedData[i]['비고']
 
+    // file data
+    course.year = String(fileName.split('-')[0])
+    if (fileName.split('-')[1] == 0) course.semester = '1학기'
+    if (fileName.split('-')[1] == 1) course.semester = '여름방학'
+    if (fileName.split('-')[1] == 2) course.semester = '2학기'
+    if (fileName.split('-')[1] == 3) course.semester = '겨울방학'
+    course.theCourse = fileName.split('-')[2]
+    course.campus = fileName.split('-')[3]
+    console.log(course)
+
     if (course.room != '' && course.time != '') {
       // 재택강의 제거
       courseArray.push(course)
@@ -46,6 +57,7 @@ module.exports.run = fileName => {
   }
 
   courseArray = parseCau.parseToSend(courseArray)
+  courseArray = parseCau.format(courseArray)
 
   parseCau.createFile(courseArray, fileName)
 

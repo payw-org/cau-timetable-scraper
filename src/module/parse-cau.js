@@ -185,6 +185,12 @@ function parseToSend(src) {
     course.flexible = item['flexible']
     course.note = item['note']
 
+    // file data
+    course.year = item.year
+    course.semester = item.semester
+    course.campus = item.campus
+    course.theCourse = item.theCourse
+
     course.locations = new Array()
     item['room'].forEach(function(item2, index) {
       location = new Object()
@@ -206,7 +212,44 @@ function parseToSend(src) {
 
     newSrc.push(course)
   })
+
   return newSrc
+}
+
+function format(src) {
+  var dataList = new Array()
+  var data
+  var j
+
+  for (var i = 0; i < src.length; i++) {
+    // check there is matching data
+    for (j = 0; j < dataList.length; j++) {
+      if (
+        dataList[j].year == src[i].year &&
+        dataList[j].semester == src[i].semester &&
+        dataList[j].campus == src[i].campus &&
+        dataList[j].theCourse == src[i].theCourse
+      ) {
+        break
+      }
+    }
+    // if not, make data
+    if (j === dataList.length) {
+      data = new Object()
+      data.year = src[i].year
+      data.semester = src[i].semester
+      data.campus = src[i].campus
+      data.theCourse = src[i].theCourse
+      console.log(src[i])
+      data.classList = new Array()
+      dataList.push(data)
+      console.log(data)
+    }
+
+    // insert course
+    dataList[j].classList.push(src[i])
+  }
+  return dataList
 }
 
 function createFile(src, fileName) {
@@ -238,3 +281,4 @@ module.exports.mergeTimes = mergeTimes
 module.exports.parseDayToDay = parseDayToDay
 module.exports.parseIntToTime = parseIntToTime
 module.exports.getDataName = getDataName
+module.exports.format = format
