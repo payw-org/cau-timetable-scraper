@@ -31,14 +31,26 @@ function getDataName() {
   return dataName
 }
 
-var j = schedule.scheduleJob('20 46 * * * *', async function() {
+// dev-mode
+;(async () => {
   console.log('Play!')
-  var fileNameReturn
-  fileNameReturn = await scraper.run()
+  var fileNameReturn = await scraper.run()
+  console.log('a')
   if (fileNameReturn != null) {
     console.log('Scraped new data')
     fileNameReturn = await duplicateDeletor.run(fileNameReturn)
     fileNameReturn = await parser.run(fileNameReturn)
   }
   console.log('Done')
-})
+})()
+// var j = schedule.scheduleJob('20 46 * * * *', async function() {
+//   console.log('Play!')
+//   var fileNameReturn
+//   fileNameReturn = await scraper.run()
+//   if (fileNameReturn != null) {
+//     console.log('Scraped new data')
+//     fileNameReturn = await duplicateDeletor.run(fileNameReturn)
+//     fileNameReturn = await parser.run(fileNameReturn)
+//   }
+//   console.log('Done')
+// })
