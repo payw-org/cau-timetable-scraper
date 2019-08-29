@@ -189,7 +189,7 @@ function parseToSend(src) {
     course.year = item.year
     course.semester = item.semester
     course.campus = item.campus
-    course.theCourse = item.theCourse
+    course.mainCourse = item.mainCourse
 
     course.locations = new Array()
     item['room'].forEach(function(item2, index) {
@@ -228,7 +228,7 @@ function format(src) {
         dataList[j].year == src[i].year &&
         dataList[j].semester == src[i].semester &&
         dataList[j].campus == src[i].campus &&
-        dataList[j].theCourse == src[i].theCourse
+        dataList[j].mainCourse == src[i].mainCourse
       ) {
         break
       }
@@ -239,12 +239,21 @@ function format(src) {
       data.year = src[i].year
       data.semester = src[i].semester
       data.campus = src[i].campus
-      data.theCourse = src[i].theCourse
-      console.log(src[i])
+      data.mainCourse = src[i].mainCourse
       data.classList = new Array()
       dataList.push(data)
-      console.log(data)
+      console.log(j)
+      console.log(dataList.length)
+      
     }
+
+    
+    // remove keyValue
+    src[i].year = undefined
+    src[i].semester = undefined
+    src[i].campus = undefined
+    src[i].mainCourse = undefined
+    
 
     // insert course
     dataList[j].classList.push(src[i])
