@@ -189,6 +189,34 @@ async function scrap_ClassList(page) {
         .innerText
     }, i)
 
+    // file data
+    classItemScraped['year'] = await page.evaluate( () => {
+      var selectedIndex = document.querySelector('#sel_year').selectedIndex
+      return document.querySelector('#sel_year').children[selectedIndex].innerHTML.trim()
+    })
+    classItemScraped['semester'] = await page.evaluate( () => {
+      var selectedIndex = document.querySelector('#sel_shtm').selectedIndex
+      return document.querySelector('#sel_shtm').children[selectedIndex].innerHTML.trim()
+    })
+    if (classItemScraped['semester'] == '하계') classItemScraped['semester'] = '여름'
+    if (classItemScraped['semester'] == '동계') classItemScraped['semester'] = '겨울'
+    classItemScraped['campus'] = await page.evaluate( () => {
+      var selectedIndex = document.querySelector('#sel_camp').selectedIndex
+      return document.querySelector('#sel_camp').children[selectedIndex].innerHTML.trim()
+    })
+    classItemScraped['mainCourse'] = await page.evaluate( () => {
+      var selectedIndex = document.querySelector('#sel_course').selectedIndex
+      return document.querySelector('#sel_course').children[selectedIndex].innerHTML.trim()
+    })
+
+    // exception
+    if(classItemScraped['개설학과'] == ''){
+      classItemScraped['개설학과'] = await page.evaluate( () => {
+        var selectedIndex = document.querySelector('#sel_sust').selectedIndex
+        return document.querySelector('#sel_sust').children[selectedIndex].innerHTML.trim()
+      })
+    }
+
     classListScraped.push(classItemScraped)
     process.stdout.write('.')
   }
