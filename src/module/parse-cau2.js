@@ -1,23 +1,4 @@
 var app_path = '/home/bitnami/app/dev-hcj'
-var data_vender = 'cau2'
-
-var data_scrap = require(app_path +
-  '/server/resources/scrap/scrap_중앙대_1.json')
-/**
- * Index    title          usage
- * 0        학년
- * 1        이수구분
- * 2        과목번호-분반   true
- * 3        과목명          true
- * 4        담당교수        true
- * 5        학점
- * 6        시간
- * 7        강의실/강의시간 true
- * 8        강의평
- * 9        담은인원
- * 10       개설학과
- * 11       유의사항
- */
 
 /**
  *
@@ -204,82 +185,9 @@ function parseToTimes(src) {
   return result
 }
 
-// testData(data_scrap);
-// return ;
-
-let data_parse = new Array()
-let data_parse_error = new Array()
-
-let classInfo
-let classInfo_error
-let data_scrap_unit
-
-let resultOfParse
-let buildings = new Array()
-for (let i = 0; i < data_scrap.length; i++) {
-  data_scrap_unit = data_scrap[i]
-
-  // init classInfo
-  classInfo = new Object()
-  classInfo_error = null
-
-  classInfo.class_id = data_scrap_unit['과목번호-분반'] // done.
-  classInfo.name = data_scrap_unit['과목명'] // done.
-  classInfo.instructor = data_scrap_unit['담당교수'] // done.
-
-  // parse location
-  resultOfParse = parseToLocations(data_scrap_unit['강의실/강의시간'])
-  if (resultOfParse.error == false)
-    classInfo.locations = resultOfParse.locations
-  else {
-    classInfo_error = new Object()
-    classInfo_error.srcOrigin = data_scrap_unit['강의실/강의시간'] + 1
-  }
-
-  // parse time
-  resultOfParse = parseToTimes(data_scrap_unit['강의실/강의시간'])
-  if (resultOfParse.error == false) classInfo.times = resultOfParse.times
-  else {
-    classInfo_error = new Object()
-    classInfo_error.srcOrigin = data_scrap_unit['강의실/강의시간'] + 2
-  }
-
-  // invalid data set
-  if (
-    classInfo_error == null &&
-    classInfo.times.length < classInfo.locations.length
-  ) {
-    classInfo_error = new Object()
-    classInfo_error.srcOrigin = data_scrap_unit['강의실/강의시간'] + 3
-  }
-
-  // the number of time is more than location
-  if (
-    classInfo_error == null &&
-    classInfo.times.length > classInfo.locations.length
-  ) {
-    let diff = classInfo.times.length - classInfo.locations.length
-    for (let i = 0; i < diff; i++) {
-      classInfo.locations.push(
-        classInfo.locations[classInfo.locations.length - 1]
-      )
-    }
-  }
-
-  if (classInfo_error == null) {
-    data_parse.push(classInfo)
-    if (buildings.includes(classInfo.locations[0].building) == false)
-      buildings.push(classInfo.locations[0].building)
-  }
-  if (classInfo_error != null) {
-    data_parse_error.push(classInfo_error)
-  }
-}
-
-data_parse.vender = data_vender
-createFile(data_parse, '/parse/parse-' + data_vender + '.json')
-createFile(
-  data_parse_error,
-  '/parse-debug/parse-' + data_vender + '-error.json'
-)
-createFile(buildings, '/parse-debug/buildings-' + data_vender + '.json')
+module.exports.parseToTimes = parseToTimes
+module.exports.createFile = createFile
+module.exports.parseDayToDay = parseDayToDay
+module.exports.parseIntToTime = parseIntToTime
+module.exports.testData = testData
+module.exports.parseToLocations = parseToLocations
