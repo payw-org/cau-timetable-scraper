@@ -41,14 +41,10 @@ module.exports.run = fileName => {
     course.note = scrapedData[i]['비고']
 
     // file data
-    course.year = String(fileName.split('-')[0])
-    if (fileName.split('-')[1] == 0) course.semester = '1학기'
-    if (fileName.split('-')[1] == 1) course.semester = '여름방학'
-    if (fileName.split('-')[1] == 2) course.semester = '2학기'
-    if (fileName.split('-')[1] == 3) course.semester = '겨울방학'
-    course.theCourse = fileName.split('-')[2]
-    course.campus = fileName.split('-')[3]
-    console.log(course)
+    course.year = scrapedData[i]['year']
+    course.semester = scrapedData[i]['semester']
+    course.campus = scrapedData[i]['campus']
+    course.mainCourse = scrapedData[i]['mainCourse']
 
     if (course.room != '' && course.time != '') {
       // 재택강의 제거
