@@ -1,22 +1,28 @@
 {
-  "name": "eodiro-cralwer",
-  "version": "1.0.0",
-  "description": "workspace to make crawler for eodiro",
-  "main": "index.js",
+  "name": "cau-timetable-scraper",
+  "version": "2.0.0-alpha.0",
+  "description": "A CAU Timetable Scraper",
+  "main": "src/main.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm run set-pkg-dev && ts-node src/test/index.ts",
+    "build": "tsc",
+    "set-pkg-start": "node src/dev/modify-package.js",
+    "set-pkg-dev": "cross-env NODE_ENV=development node src/dev/modify-package.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/payasyouwant/eodiro-crawler.git"
+  "dependencies": {
+    "module-alias": "^2.2.2",
+    "pending-xhr-puppeteer": "^2.1.0",
+    "puppeteer": "^2.0.0"
   },
-  "author": "hcj",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/payasyouwant/eodiro-crawler/issues"
-  },
-  "homepage": "https://github.com/payasyouwant/eodiro-crawler#readme",
   "devDependencies": {
-    "puppeteer": "^1.18.1"
+    "@types/puppeteer": "^2.0.0",
+    "cross-env": "^6.0.3",
+    "ts-node": "^8.6.2",
+    "typescript": "^3.7.5"
+  },
+  "author": "PAYW",
+  "license": "MIT",
+  "_moduleAliases": {
+    "@": "src"
   }
 }

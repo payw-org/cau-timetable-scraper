@@ -1,14 +1,4 @@
-.vscode
 .DS_Store
 node_modules
-package-lock.json
-forever.json
-server/configs/private.js
-
-public_html/assets/build
-server/lib/build
-server/lib/log
-server/resources/scrap
-server/resources/parse-debug
-
-info.json
+src/account/index.ts
+build

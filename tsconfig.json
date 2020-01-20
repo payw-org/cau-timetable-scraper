@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "incremental": true,
+    "target": "ESNext",
+    "module": "commonjs",
+    "declaration": true,
+    "removeComments": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "baseUrl": "./",
+    "noEmit": true,
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "build"
+  },
+  "exclude": ["src/account", "src/test", "node_modules", "build"]
+}
