@@ -8,10 +8,13 @@
     "strict": true,
     "noImplicitAny": true,
     "baseUrl": "./",
+    "noEmit": true,
     "paths": {
-      "@src/*": ["src/*"]
+      "@/*": ["./src/*"]
     },
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true
-  }
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "build"
+  },
+  "exclude": ["src/account", "src/test", "node_modules", "build"]
 }
