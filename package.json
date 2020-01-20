@@ -4,23 +4,25 @@
   "description": "A CAU Timetable Scraper",
   "main": "src/main.ts",
   "scripts": {
-    "start": ""
+    "test": "npm run set-pkg-dev && ts-node src/test/index.ts",
+    "build": "tsc",
+    "set-pkg-start": "node src/dev/modify-package.js",
+    "set-pkg-dev": "cross-env NODE_ENV=development node src/dev/modify-package.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/paywteam/cau-timetable-scraper.git"
+  "dependencies": {
+    "module-alias": "^2.2.2",
+    "pending-xhr-puppeteer": "^2.1.0",
+    "puppeteer": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/puppeteer": "^2.0.0",
+    "cross-env": "^6.0.3",
+    "ts-node": "^8.6.2",
+    "typescript": "^3.7.5"
   },
   "author": "PAYW",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/paywteam/cau-timetable-scraper/issues"
-  },
-  "homepage": "https://github.com/paywteam/cau-timetable-scraper#readme",
-  "devDependencies": {
-    "@types/puppeteer": "^2.0.0",
-    "typescript": "^3.7.5"
-  },
-  "dependencies": {
-    "puppeteer": "^2.0.0"
+  "_moduleAliases": {
+    "@": "src"
   }
 }
