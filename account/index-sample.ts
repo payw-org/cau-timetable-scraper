@@ -2,7 +2,7 @@
  * Change this file to "index.ts"
  */
 
-import { Account } from '@/account/type'
+import { Account } from './type'
 
 const account: Account = {
   id: '',

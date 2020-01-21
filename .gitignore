@@ -1,5 +1,7 @@
 .DS_Store
 node_modules
-src/account/index.ts
+account/index.ts
+account/index.js
+test/index.js
 build
 data
