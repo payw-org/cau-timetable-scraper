@@ -4,10 +4,12 @@
   "description": "A CAU Timetable Scraper",
   "main": "src/main.ts",
   "scripts": {
-    "test": "npm run set-pkg-dev && ts-node src/test/index.ts",
-    "build": "tsc",
+    "test-ts": "npm run set-pkg-dev && ts-node src/test/index.ts",
+    "test-node": "npm run set-pkg-start && node build/test/index.js",
+    "build": "npm run clear && tsc",
     "set-pkg-start": "node src/dev/modify-package.js",
-    "set-pkg-dev": "cross-env NODE_ENV=development node src/dev/modify-package.js"
+    "set-pkg-dev": "cross-env NODE_ENV=development node src/dev/modify-package.js",
+    "clear": "rimraf build/*"
   },
   "dependencies": {
     "module-alias": "^2.2.2",
@@ -17,12 +19,14 @@
   "devDependencies": {
     "@types/puppeteer": "^2.0.0",
     "cross-env": "^6.0.3",
+    "rimraf": "^3.0.0",
     "ts-node": "^8.6.2",
     "typescript": "^3.7.5"
   },
   "author": "PAYW",
   "license": "MIT",
   "_moduleAliases": {
-    "@": "src"
+    "@": "./build/src",
+    "@@": "./build"
   }
 }
