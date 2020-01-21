@@ -2,7 +2,8 @@ import 'module-alias/register'
 import puppeteer from 'puppeteer'
 import { signIn } from '@/sign-in'
 import { scrapeTimetable } from '@/scrape-timetable'
-import { Account } from '@/account/type'
+import { Account } from '@@/account/type'
+import fs from 'fs'
 
 const CTTS = async (account: Account) => {
   const browser = await puppeteer.launch({
@@ -23,6 +24,10 @@ const CTTS = async (account: Account) => {
       console.log(`${msg.args()[i]}`)
     }
   })
+
+  if (!fs.existsSync('data')) {
+    fs.mkdirSync('data')
+  }
 
   await signIn(page, account)
   await scrapeTimetable(page)
