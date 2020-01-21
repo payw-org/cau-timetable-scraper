@@ -1,5 +1,5 @@
 import { Page } from 'puppeteer'
-import { Account } from '@/account/type'
+import { Account } from '@@/account/type'
 import { PendingXHR } from 'pending-xhr-puppeteer'
 import Print from '@/utils/print'
 
