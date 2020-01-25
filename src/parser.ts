@@ -1,28 +1,36 @@
 import 'module-alias/register'
 import { Lecture } from '@/analyze-table'
-import lectures from '@@/data/lectures.json'
+import lectures from '@@/data/lectures-college.json'
 import fs from 'fs'
 
-const typedLectures: Lecture[] = lectures as Lecture[]
+const typedLectures = lectures as Lecture[]
 
-console.log(typedLectures.length)
-
-const times = typedLectures.map(lecture => {
-  return lecture.time
+// Remove duplicates
+const atomicLectures = typedLectures.filter((lecture, index) => {
+  return (
+    index ===
+    typedLectures.findIndex(obj => {
+      return obj.code === lecture.code
+    })
+  )
 })
 
-const places = typedLectures.map(lecture => {
-  let place = ''
-  const building = lecture.time.match(/[0-9]+관/g)
-  if (building) {
-    place += building[0]
-  }
-  const room = lecture.time.match(/[0-9]+호/g)
-  if (room) {
-    place += ' ' + room[0]
-  }
-  return place
-})
+const parsedLectures = []
 
-fs.writeFileSync('data/times.txt', times.join('\n'))
-fs.writeFileSync('data/places.txt', places.join('\n'))
+for (let i = 0; i < atomicLectures.length; i += 1) {
+  const lecture = atomicLectures[i]
+  let parsed = ''
+
+  if (lecture.time === '/') {
+    parsed = `❌ ${lecture.code}-${lecture.college}-${lecture.course}-${lecture.name} - no time`
+  } else {
+    parsed = `✅ ${lecture.code}-${lecture.college}-${lecture.course}-${lecture.name} -> `
+    const building = lecture.time.match(/[0-9]+관/g)
+    const room = lecture.time.match(/[0-9]+호/g)
+    parsed += `building: ${building}, room: ${room}`
+  }
+
+  parsedLectures.push(parsed)
+}
+
+fs.writeFileSync('data/parsed.txt', parsedLectures.join('\n'))
