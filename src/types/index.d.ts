@@ -3,7 +3,7 @@ export type Account = {
   pw: string
 }
 
-export type Lecture = {
+export interface Lecture {
   college: string
   subject: string
   grade: string
@@ -19,23 +19,22 @@ export type Lecture = {
   note: string
 }
 
+export type LectureKey = keyof Lecture
+
 export type Lectures = Lecture[]
 
-export type RefinedLecture = {
-  college: string
-  subject: string
-  grade: string
-  course: string
-  section: string
-  code: string
-  name: string
-  credit: string
-  professor: string
-  closed: string
+export type Period = {
+  day: 'mon' | 'tue' | 'wed' | 'thu' | 'fri' | 'sat' | 'sun'
+  startH: number
+  startM: number
+  endH: number
+  endM: number
+}
+
+export interface RefinedLecture extends Lecture {
   building: string
   room: string
-  flex: string
-  note: string
+  periods: Period[]
 }
 
 export type RefinedLectures = RefinedLecture[]
