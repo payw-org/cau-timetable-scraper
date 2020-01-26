@@ -2,7 +2,7 @@ import 'module-alias/register'
 import puppeteer from 'puppeteer'
 import { signIn } from '@/sign-in'
 import { scrapeTimetable } from '@/scrape-timetable'
-import { Account } from '@@/account/type'
+import { Account } from '@/types'
 import fs from 'fs'
 
 const CTTS = async (account: Account) => {
