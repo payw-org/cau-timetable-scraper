@@ -1,4 +1,3 @@
-import 'module-alias/register'
 import puppeteer from 'puppeteer'
 import { signIn } from './sign-in'
 import { scrapeTimetable } from './scrape-timetable'
