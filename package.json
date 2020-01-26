@@ -1,6 +1,6 @@
 {
   "name": "@payw/cau-timetable-scraper",
-  "version": "2.0.0-alpha.3",
+  "version": "2.0.0-alpha.4",
   "description": "A CAU Timetable Scraper",
   "main": "build/src/index.js",
   "repository": "https://github.com/paywteam/cau-timetable-scraper.git",
@@ -11,7 +11,7 @@
     "set-pkg-start": "node src/dev/modify-package.js",
     "set-pkg-dev": "cross-env NODE_ENV=development node src/dev/modify-package.js",
     "clear": "rimraf build/*",
-    "publish": "npm run build && npm publish --access public"
+    "deploy": "npm run build && npm publish --access public"
   },
   "dependencies": {
     "pending-xhr-puppeteer": "^2.1.0",
