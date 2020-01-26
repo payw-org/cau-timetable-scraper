@@ -55,10 +55,10 @@ The `CTTS` function returns an array of refined lectures.
 
 | key    | type                                        |
 | ------ | ------------------------------------------- |
-| day    | `'mon'|'tue'|'wed'|'thu'|'fri'|'sat'|'sun'` |
-| startH | `number`                                    |
-| startM | `number`                                    |
-| endH   | `number`                                    |
-| endM   | `number`                                    |
+| day    | `'mon'\|'tue'\|'wed'\|'thu'\|'fri'\|'sat'\|'sun'` |
+| startH | `number`                                          |
+| startM | `number`                                          |
+| endH   | `number`                                          |
+| endM   | `number`                                          |
 
 Check out [type definitions](https://github.com/paywteam/cau-timetable-scraper/blob/master/src/types/index.ts) for more information.
