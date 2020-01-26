@@ -1,4 +1,3 @@
-import 'module-alias/register'
 import { Lectures } from './types'
 
 export const atomize = (lectures: Lectures) => {
