@@ -12,7 +12,6 @@
     "clear": "rimraf build/*"
   },
   "dependencies": {
-    "module-alias": "^2.2.2",
     "pending-xhr-puppeteer": "^2.1.0",
     "puppeteer": "^2.0.0"
   },
@@ -24,9 +23,5 @@
     "typescript": "^3.7.5"
   },
   "author": "PAYW",
-  "license": "MIT",
-  "_moduleAliases": {
-    "@": "./build/src",
-    "@@": "./build"
-  }
+  "license": "MIT"
 }

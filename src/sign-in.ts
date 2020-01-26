@@ -1,7 +1,7 @@
 import { Page } from 'puppeteer'
-import { Account } from '@@/account/type'
+import { Account } from './types'
 import { PendingXHR } from 'pending-xhr-puppeteer'
-import Print from '@/utils/print'
+import Print from './utils/print'
 
 type signInSelectors = {
   idInput: string

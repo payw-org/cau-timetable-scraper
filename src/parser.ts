@@ -1,6 +1,5 @@
-import 'module-alias/register'
-import { Lecture } from '@/analyze-table'
-import lectures from '@@/data/lectures-college.json'
+import { Lecture } from './types'
+import lectures from '../data/lectures-college.json'
 import fs from 'fs'
 
 const typedLectures = lectures as Lecture[]

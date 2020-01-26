@@ -1,23 +1,8 @@
 import { Page } from 'puppeteer'
+import { Lecture, Lectures } from './types'
 
 const selectors = {
   tableRow: '.sp-grid-data-row'
-}
-
-export type Lecture = {
-  college: string
-  subject: string
-  grade: string
-  course: string
-  section: string
-  code: string
-  name: string
-  credit: string
-  professor: string
-  closed: string
-  time: string
-  flex: string
-  note: string
 }
 
 type LectureKey = keyof Lecture
@@ -25,7 +10,7 @@ type LectureKey = keyof Lecture
 const analyzeTable = async (page: Page) => {
   const lectures = await page.evaluate((tableRowSelector: string) => {
     const rows = document.querySelectorAll(tableRowSelector)
-    const lectures: Lecture[] = []
+    const lectures: Lectures = []
 
     rows.forEach(row => {
       let lecture: Lecture = {

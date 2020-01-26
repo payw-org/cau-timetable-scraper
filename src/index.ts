@@ -1,8 +1,9 @@
 import 'module-alias/register'
 import puppeteer from 'puppeteer'
-import { signIn } from '@/sign-in'
-import { scrapeTimetable } from '@/scrape-timetable'
-import { Account } from '@/types'
+import { signIn } from './sign-in'
+import { scrapeTimetable } from './scrape-timetable'
+import { Account } from './types'
+import { atomize } from './atomize'
 import fs from 'fs'
 
 const CTTS = async (account: Account) => {
@@ -30,9 +31,11 @@ const CTTS = async (account: Account) => {
   }
 
   await signIn(page, account)
-  await scrapeTimetable(page)
+  const lectures = atomize(await scrapeTimetable(page))
 
   browser.close()
+
+  return lectures
 }
 
 export { CTTS }

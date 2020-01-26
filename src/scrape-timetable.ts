@@ -1,7 +1,8 @@
 import { Page } from 'puppeteer'
-import Print from '@/utils/print'
+import Print from './utils/print'
 import { PendingXHR } from 'pending-xhr-puppeteer'
-import { analyzeTable, Lecture } from '@/analyze-table'
+import { analyzeTable } from './analyze-table'
+import { Lecture, Lectures } from './types'
 import fs from 'fs'
 
 const selectors = {
@@ -73,10 +74,11 @@ export const scrapeTimetable = async (page: Page) => {
 
   Print.done()
 
-  let totalLectures: Lecture[] = []
+  let totalLectures: Lectures = []
 
   const yearOptions = await getOptionsFromSelect(page, selectors.yearSelect)
 
+  // Only current year
   await selectOption(page, selectors.yearSelect, yearOptions[0].value)
 
   const semesterOptions = await getOptionsFromSelect(
@@ -96,11 +98,8 @@ export const scrapeTimetable = async (page: Page) => {
       selectors.courseSelect
     )
 
-    for (
-      let courseIndex = 0;
-      courseIndex < courseOptions.length;
-      courseIndex += 1
-    ) {
+    // Only college. No postgraduate course.
+    for (let courseIndex = 0; courseIndex < 1; courseIndex += 1) {
       const courseOption = courseOptions[courseIndex]
       await selectOption(page, selectors.courseSelect, courseOption.value)
       const campusOptions = await getOptionsFromSelect(
@@ -108,6 +107,7 @@ export const scrapeTimetable = async (page: Page) => {
         selectors.campusSelect
       )
 
+      // Only Seoul campus
       for (let campusIndex = 0; campusIndex < 1; campusIndex += 1) {
         const campusOption = campusOptions[campusIndex]
         await selectOption(page, selectors.campusSelect, campusOption.value)
@@ -151,5 +151,10 @@ export const scrapeTimetable = async (page: Page) => {
     }
   }
 
-  fs.writeFileSync(`data/lectures.json`, JSON.stringify(totalLectures, null, 2))
+  return totalLectures
+
+  // fs.writeFileSync(
+  //   `data/lectures-college.json`,
+  //   JSON.stringify(totalLectures, null, 2)
+  // )
 }
