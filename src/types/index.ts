@@ -3,18 +3,31 @@ export type Account = {
   pw: string
 }
 
-export interface Lecture {
+export type Coverage = {
+  year: string
+  semester: string
+  course: string
+  campus: string
   college: string
-  subject: string
-  grade: string
+  major: string
+}
+
+export type Coverages = Coverage[]
+
+export interface Lecture {
+  coverages: Coverages
+  college: string
+  major: string
+  grade: number
   course: string
   section: string
   code: string
   name: string
-  credit: string
+  credit: number
+  time: number
   professor: string
   closed: string
-  time: string
+  schedule: string
   flex: string
   note: string
 }
