@@ -22,7 +22,7 @@ import { CTTS } from '@payw/cau-timetable-scraper'
 
 const lectures = CTTS({
   id: 'CAU Portal ID',
-  pw: 'password'
+  pw: 'password',
 })
 ```
 
@@ -32,29 +32,42 @@ const lectures = CTTS({
 
 The `CTTS` function returns an array of refined lectures.
 
-| key       | type       |
-| --------- | ---------- |
-| college   | `string`   |
-| subject   | `string`   |
-| grade     | `string`   |
-| course    | `string`   |
-| section   | `string`   |
-| code      | `string`   |
-| name      | `string`   |
-| credit    | `string`   |
-| professor | `string`   |
-| closed    | `string`   |
-| time      | `string`   |
-| building  | `string`   |
-| room      | `string`   |
-| periods   | `Period[]` |
-| flex      | `string`   |
-| note      | `string`   |
+| key       | type         |
+| --------- | ------------ |
+| coverages | `Coverage[]` |
+| college   | `string`     |
+| subject   | `string`     |
+| grade     | `string`     |
+| course    | `string`     |
+| section   | `string`     |
+| code      | `string`     |
+| time      | `string`     |
+| name      | `string`     |
+| credit    | `string`     |
+| professor | `string`     |
+| closed    | `string`     |
+| schedule  | `string`     |
+| building  | `string`     |
+| room      | `string`     |
+| periods   | `Period[]`   |
+| flex      | `string`     |
+| note      | `string`     |
+
+### Coverage
+
+| key      | type     |
+| -------- | -------- |
+| year     | `string` |
+| semester | `string` |
+| course   | `string` |
+| campus   | `string` |
+| college  | `string` |
+| major    | `string` |
 
 ### Period
 
-| key    | type                                        |
-| ------ | ------------------------------------------- |
+| key    | type                                              |
+| ------ | ------------------------------------------------- |
 | day    | `'mon'\|'tue'\|'wed'\|'thu'\|'fri'\|'sat'\|'sun'` |
 | startH | `number`                                          |
 | startM | `number`                                          |
