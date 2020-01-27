@@ -9,13 +9,13 @@ import fs from 'fs'
 const CTTS = async (account: Account) => {
   const browser = await puppeteer.launch({
     headless: true,
-    args: ['--no-sandbox']
+    args: ['--no-sandbox'],
   })
 
   const page = await browser.newPage()
   page.setViewport({
     width: 1280,
-    height: 800
+    height: 800,
   })
 
   page.setMaxListeners(Infinity)
