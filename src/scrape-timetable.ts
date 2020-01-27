@@ -2,8 +2,7 @@ import { Page } from 'puppeteer'
 import Print from './utils/print'
 import { PendingXHR } from 'pending-xhr-puppeteer'
 import { analyzeTable } from './analyze-table'
-import { Lecture, Lectures } from './types'
-import fs from 'fs'
+import { Lectures } from './types'
 
 const selectors = {
   yearSelect: '#sel_year',
@@ -12,7 +11,7 @@ const selectors = {
   campusSelect: '#sel_camp',
   collegeSelect: '#sel_colg',
   majorSelect: '#sel_sust',
-  searchButton: '.nb-search-submit button'
+  searchButton: '.nb-search-submit button',
 }
 
 async function getOptionsFromSelect(page: Page, selectSelector: string) {
@@ -30,7 +29,7 @@ async function getOptionsFromSelect(page: Page, selectSelector: string) {
       if (!option.innerText.trim().includes('-')) {
         options.push({
           value: option.value,
-          label: option.textContent?.trim() || ''
+          label: option.textContent?.trim() || '',
         })
       }
     })
@@ -66,8 +65,6 @@ async function clickSearch(page: Page) {
 }
 
 export const scrapeTimetable = async (page: Page) => {
-  const pendingXHR = new PendingXHR(page)
-
   Print.ln('Navigating to timetable page...')
 
   await page.goto('https://mportal.cau.ac.kr/std/usk/sUskSif001/index.do')
@@ -79,18 +76,15 @@ export const scrapeTimetable = async (page: Page) => {
   const yearOptions = await getOptionsFromSelect(page, selectors.yearSelect)
 
   // Only current year
-  await selectOption(page, selectors.yearSelect, yearOptions[0].value)
+  const yearOption = yearOptions[0]
+  await selectOption(page, selectors.yearSelect, yearOption.value)
 
   const semesterOptions = await getOptionsFromSelect(
     page,
     selectors.semesterSelect
   )
 
-  for (
-    let semesterIndex = 0;
-    semesterIndex < semesterOptions.length;
-    semesterIndex += 1
-  ) {
+  for (let semesterIndex = 0; semesterIndex < 1; semesterIndex += 1) {
     const semesterOption = semesterOptions[semesterIndex]
     await selectOption(page, selectors.semesterSelect, semesterOption.value)
     const courseOptions = await getOptionsFromSelect(
@@ -142,9 +136,16 @@ export const scrapeTimetable = async (page: Page) => {
               true
             )
 
-            const lectures = await analyzeTable(page)
+            const lectures = await analyzeTable(page, {
+              year: yearOption.label.trim(),
+              semester: semesterOption.label.trim(),
+              courseCoverage: courseOption.label.trim(),
+              campusCoverage: campusOption.label.trim(),
+              collegeCoverage: collegeOption.label.trim(),
+              majorCoverage: majorOption.label.trim(),
+            })
+
             totalLectures.push(...lectures)
-            // const times = lectures.map(lecture => lecture.time).join('\n')
           }
         }
       }
@@ -152,9 +153,4 @@ export const scrapeTimetable = async (page: Page) => {
   }
 
   return totalLectures
-
-  // fs.writeFileSync(
-  //   `data/lectures-college.json`,
-  //   JSON.stringify(totalLectures, null, 2)
-  // )
 }
