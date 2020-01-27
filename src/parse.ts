@@ -1,4 +1,4 @@
-import { Lectures, Period, RefinedLecture, LectureKey } from './types'
+import { Lectures, Period, RefinedLecture } from './types'
 
 type KoreanDay = '월' | '화' | '수' | '목' | '금' | '토' | '일'
 
@@ -21,29 +21,6 @@ function convertDay(day: KoreanDay) {
   }
 }
 
-function createRefinedLecture() {
-  const refinedLecture: RefinedLecture = {
-    college: '',
-    subject: '',
-    grade: '',
-    course: '',
-    section: '',
-    code: '',
-    name: '',
-    credit: '',
-    professor: '',
-    closed: '',
-    time: '',
-    flex: '',
-    note: '',
-    building: '',
-    room: '',
-    periods: []
-  }
-
-  return refinedLecture
-}
-
 function intervalToTime(interval: number | string) {
   interval = Number(interval)
   const startTime = 9
@@ -52,28 +29,27 @@ function intervalToTime(interval: number | string) {
     startH: interval - 1 + startTime,
     startM: 0,
     endH: interval + startTime,
-    endM: 0
+    endM: 0,
   }
 }
 
 export const parse = (lectures: Lectures) => {
   const refinedLectures = lectures.map(lecture => {
-    const refinedLecture = createRefinedLecture()
-    let key: LectureKey
-    for (key in lecture) {
-      refinedLecture[key] = lecture[key]
-    }
+    const refinedLecture = lecture as RefinedLecture
+    refinedLecture.building = ''
+    refinedLecture.room = ''
+    refinedLecture.periods = []
 
-    const timeStr = lecture.time
+    const schedule = lecture.schedule
 
     const buildingRegExp = /([0-9]+) *?관/g
-    const buildingMatch = buildingRegExp.exec(timeStr)
+    const buildingMatch = buildingRegExp.exec(schedule)
     if (buildingMatch) {
       refinedLecture.building = buildingMatch[1]
     }
 
     const roomRegExp = /([0-9]+) *?호/g
-    const roomMatch = roomRegExp.exec(timeStr)
+    const roomMatch = roomRegExp.exec(schedule)
     if (roomMatch) {
       refinedLecture.room = roomMatch[1]
     }
@@ -81,21 +57,21 @@ export const parse = (lectures: Lectures) => {
     const timeRegExp1 = /([월화수목금토일]) *?\(?([0-9]+):([0-9]+)~([0-9]+):([0-9]+)\)?/g
 
     let timeMatch1: RegExpExecArray | null
-    if (timeStr.match(timeRegExp1)) {
-      while ((timeMatch1 = timeRegExp1.exec(timeStr))) {
+    if (schedule.match(timeRegExp1)) {
+      while ((timeMatch1 = timeRegExp1.exec(schedule))) {
         let period: Period = {
           day: convertDay(timeMatch1[1] as KoreanDay),
           startH: Number(timeMatch1[2]),
           startM: Number(timeMatch1[3]),
           endH: Number(timeMatch1[4]),
-          endM: Number(timeMatch1[5])
+          endM: Number(timeMatch1[5]),
         }
         refinedLecture.periods.push(period)
       }
     } else {
       const timeRegExp2 = /([월화수목금토일]) *?(([0-9] *?,?)+)/g
       let timeMatch2
-      while ((timeMatch2 = timeRegExp2.exec(timeStr))) {
+      while ((timeMatch2 = timeRegExp2.exec(schedule))) {
         const intervals = timeMatch2[2].split(',')
         const startIntervalTime = intervalToTime(intervals[0])
         const endIntervalTime = intervalToTime(intervals[intervals.length - 1])
@@ -104,7 +80,7 @@ export const parse = (lectures: Lectures) => {
           startH: startIntervalTime.startH,
           startM: startIntervalTime.startM,
           endH: endIntervalTime.endH,
-          endM: endIntervalTime.endM
+          endM: endIntervalTime.endM,
         }
         refinedLecture.periods.push(period)
       }
