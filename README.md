@@ -3,10 +3,12 @@
 <p align="center">A Node.js CAU timetable scraping module for <b>eodiro</b> written in TypeScript</p>
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/@payw/cau-timetable-scraper">
+  <a href="https://www.npmjs.com/package/@payw/cau-timetable-scraper" target="_blank">
     <img src="https://img.shields.io/npm/v/@payw/cau-timetable-scraper">
   </a>
-  <img src="https://img.shields.io/github/license/paywteam/cau-timetable-scraper?style=flat">
+  <a href="https://github.com/paywteam/cau-timetable-scraper/blob/master/LICENSE">
+    <img src="https://img.shields.io/github/license/paywteam/cau-timetable-scraper?style=flat">
+  </a>
 </p>
 
 ---
