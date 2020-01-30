@@ -8,6 +8,9 @@ export const atomize = (lectures: Lectures) => {
     const dupIndex = lectures.findIndex((lecture, index) => {
       return (
         index !== i &&
+        lecture.year === currentLecture.year &&
+        lecture.semester === currentLecture.semester &&
+        lecture.campus === currentLecture.campus &&
         lecture.college === currentLecture.college &&
         lecture.major === currentLecture.major &&
         lecture.grade === currentLecture.grade &&

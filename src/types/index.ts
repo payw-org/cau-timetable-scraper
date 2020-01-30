@@ -4,10 +4,10 @@ export type Account = {
 }
 
 export type Coverage = {
-  year: string
-  semester: string
+  // year: string
+  // semester: string
   course: string
-  campus: string
+  // campus: string
   college: string
   major: string
 }
@@ -16,6 +16,9 @@ export type Coverages = Coverage[]
 
 export interface Lecture {
   coverages: Coverages
+  year: number
+  semester: string
+  campus: string
   college: string
   major: string
   grade: number

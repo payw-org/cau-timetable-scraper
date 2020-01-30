@@ -38,6 +38,9 @@ const analyzeTable = async (page: Page, options: Options) => {
       rows.forEach(row => {
         let newLecture: Lecture = {
           coverages: [],
+          year: parseInt(options.year),
+          semester: options.semester,
+          campus: options.campusCoverage,
           college: '',
           major: '',
           grade: 0,
@@ -71,10 +74,10 @@ const analyzeTable = async (page: Page, options: Options) => {
         ]
 
         const coverage: Coverage = {
-          year: options.year,
-          semester: options.semester,
+          // year: options.year,
+          // semester: options.semester,
           course: options.courseCoverage,
-          campus: options.campusCoverage,
+          // campus: options.campusCoverage,
           college: options.collegeCoverage,
           major: options.majorCoverage,
         }
