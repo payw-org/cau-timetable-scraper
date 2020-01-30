@@ -39,6 +39,9 @@ The `CTTS` function returns an array of refined lectures.
 | key       | type         |
 | --------- | ------------ |
 | coverages | `Coverage[]` |
+| year      | `number`     |
+| semester  | `string`     |
+| campus    | `string`     |
 | college   | `string`     |
 | subject   | `string`     |
 | grade     | `string`     |
@@ -59,14 +62,11 @@ The `CTTS` function returns an array of refined lectures.
 
 ### Coverage
 
-| key      | type     |
-| -------- | -------- |
-| year     | `string` |
-| semester | `string` |
-| course   | `string` |
-| campus   | `string` |
-| college  | `string` |
-| major    | `string` |
+| key     | type     |
+| ------- | -------- |
+| course  | `string` |
+| college | `string` |
+| major   | `string` |
 
 ### Period
 
