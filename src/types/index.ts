@@ -6,7 +6,7 @@ export type Account = {
 export type Coverage = {
   // year: string
   // semester: string
-  course: string
+  // course: string
   // campus: string
   college: string
   major: string

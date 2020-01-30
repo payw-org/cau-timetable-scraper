@@ -76,7 +76,7 @@ const analyzeTable = async (page: Page, options: Options) => {
         const coverage: Coverage = {
           // year: options.year,
           // semester: options.semester,
-          course: options.courseCoverage,
+          // course: options.courseCoverage,
           // campus: options.campusCoverage,
           college: options.collegeCoverage,
           major: options.majorCoverage,
