@@ -1,12 +1,12 @@
 import puppeteer from 'puppeteer'
 import { signIn } from './sign-in'
 import { scrapeTimetable } from './scrape-timetable'
-import { Account } from './types'
+import { Account, ScrapeOptions } from './types'
 import { atomize } from './atomize'
 import { parse } from './parse'
 import fs from 'fs'
 
-const CTTS = async (account: Account) => {
+const CTTS = async (account: Account, scrapeOptions: ScrapeOptions) => {
   const browser = await puppeteer.launch({
     headless: true,
     args: ['--no-sandbox'],
@@ -31,7 +31,7 @@ const CTTS = async (account: Account) => {
   }
 
   await signIn(page, account)
-  const lectures = parse(atomize(await scrapeTimetable(page)))
+  const lectures = parse(atomize(await scrapeTimetable(page, scrapeOptions)))
 
   browser.close()
 

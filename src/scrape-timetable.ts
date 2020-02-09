@@ -2,7 +2,7 @@ import { Page } from 'puppeteer'
 import Print from './utils/print'
 import { PendingXHR } from 'pending-xhr-puppeteer'
 import { analyzeTable } from './analyze-table'
-import { Lectures } from './types'
+import { Lectures, ScrapeOptions } from './types'
 
 const selectors = {
   yearSelect: '#sel_year',
@@ -64,7 +64,14 @@ async function clickSearch(page: Page) {
   await pendingXHR.waitForAllXhrFinished()
 }
 
-export const scrapeTimetable = async (page: Page) => {
+export const scrapeTimetable = async (
+  page: Page,
+  scrapeOptions: ScrapeOptions
+) => {
+  Print.ln(
+    `⚙️ Scrape options: ${scrapeOptions.year}, ${scrapeOptions.semester}`,
+    true
+  )
   Print.ln('Navigating to timetable page...')
 
   await page.goto('https://mportal.cau.ac.kr/std/usk/sUskSif001/index.do')
@@ -73,10 +80,12 @@ export const scrapeTimetable = async (page: Page) => {
 
   let totalLectures: Lectures = []
 
-  const yearOptions = await getOptionsFromSelect(page, selectors.yearSelect)
-
   // Only current year
-  const yearOption = yearOptions[0]
+  const yearOptions = await getOptionsFromSelect(page, selectors.yearSelect)
+  const yearOptionIndex = yearOptions.findIndex(option => {
+    return option.value === scrapeOptions.year.toString()
+  })
+  const yearOption = yearOptions[yearOptionIndex]
   await selectOption(page, selectors.yearSelect, yearOption.value)
 
   const semesterOptions = await getOptionsFromSelect(
@@ -84,73 +93,73 @@ export const scrapeTimetable = async (page: Page) => {
     selectors.semesterSelect
   )
 
-  for (let semesterIndex = 0; semesterIndex < 1; semesterIndex += 1) {
-    const semesterOption = semesterOptions[semesterIndex]
-    await selectOption(page, selectors.semesterSelect, semesterOption.value)
-    const courseOptions = await getOptionsFromSelect(
+  // for (let semesterIndex = 0; semesterIndex < 1; semesterIndex += 1) {
+  const semesterIndex = semesterOptions.findIndex(option => {
+    return option.label === scrapeOptions.semester
+  })
+  const semesterOption = semesterOptions[semesterIndex]
+  await selectOption(page, selectors.semesterSelect, semesterOption.value)
+  const courseOptions = await getOptionsFromSelect(page, selectors.courseSelect)
+
+  // Only college. No postgraduate course.
+  for (let courseIndex = 0; courseIndex < 1; courseIndex += 1) {
+    const courseOption = courseOptions[courseIndex]
+    await selectOption(page, selectors.courseSelect, courseOption.value)
+    const campusOptions = await getOptionsFromSelect(
       page,
-      selectors.courseSelect
+      selectors.campusSelect
     )
 
-    // Only college. No postgraduate course.
-    for (let courseIndex = 0; courseIndex < 1; courseIndex += 1) {
-      const courseOption = courseOptions[courseIndex]
-      await selectOption(page, selectors.courseSelect, courseOption.value)
-      const campusOptions = await getOptionsFromSelect(
+    // Only Seoul campus
+    for (let campusIndex = 0; campusIndex < 1; campusIndex += 1) {
+      const campusOption = campusOptions[campusIndex]
+      await selectOption(page, selectors.campusSelect, campusOption.value)
+      const collegeOptions = await getOptionsFromSelect(
         page,
-        selectors.campusSelect
+        selectors.collegeSelect
       )
 
-      // Only Seoul campus
-      for (let campusIndex = 0; campusIndex < 1; campusIndex += 1) {
-        const campusOption = campusOptions[campusIndex]
-        await selectOption(page, selectors.campusSelect, campusOption.value)
-        const collegeOptions = await getOptionsFromSelect(
+      for (
+        let collegeIndex = 0;
+        collegeIndex < collegeOptions.length;
+        collegeIndex += 1
+      ) {
+        const collegeOption = collegeOptions[collegeIndex]
+        await selectOption(page, selectors.collegeSelect, collegeOption.value)
+        const majorOptions = await getOptionsFromSelect(
           page,
-          selectors.collegeSelect
+          selectors.majorSelect
         )
 
         for (
-          let collegeIndex = 0;
-          collegeIndex < collegeOptions.length;
-          collegeIndex += 1
+          let majorIndex = 0;
+          majorIndex < majorOptions.length;
+          majorIndex += 1
         ) {
-          const collegeOption = collegeOptions[collegeIndex]
-          await selectOption(page, selectors.collegeSelect, collegeOption.value)
-          const majorOptions = await getOptionsFromSelect(
-            page,
-            selectors.majorSelect
+          const majorOption = majorOptions[majorIndex]
+          await selectOption(page, selectors.majorSelect, majorOption.value)
+          await clickSearch(page)
+
+          Print.ln(
+            `${yearOption.label}-${semesterOption.label}-${courseOption.label}-${campusOption.label}-${collegeOption.label}-${majorOption.label}`,
+            true
           )
 
-          for (
-            let majorIndex = 0;
-            majorIndex < majorOptions.length;
-            majorIndex += 1
-          ) {
-            const majorOption = majorOptions[majorIndex]
-            await selectOption(page, selectors.majorSelect, majorOption.value)
-            await clickSearch(page)
+          const lectures = await analyzeTable(page, {
+            year: yearOption.label.trim(),
+            semester: semesterOption.label.trim(),
+            courseCoverage: courseOption.label.trim(),
+            campusCoverage: campusOption.label.trim(),
+            collegeCoverage: collegeOption.label.trim(),
+            majorCoverage: majorOption.label.trim(),
+          })
 
-            Print.ln(
-              `${semesterOption.label}-${courseOption.label}-${campusOption.label}-${collegeOption.label}-${majorOption.label}`,
-              true
-            )
-
-            const lectures = await analyzeTable(page, {
-              year: yearOption.label.trim(),
-              semester: semesterOption.label.trim(),
-              courseCoverage: courseOption.label.trim(),
-              campusCoverage: campusOption.label.trim(),
-              collegeCoverage: collegeOption.label.trim(),
-              majorCoverage: majorOption.label.trim(),
-            })
-
-            totalLectures.push(...lectures)
-          }
+          totalLectures.push(...lectures)
         }
       }
     }
   }
+  // }
 
   return totalLectures
 }

@@ -54,3 +54,8 @@ export interface RefinedLecture extends Lecture {
 }
 
 export type RefinedLectures = RefinedLecture[]
+
+export type ScrapeOptions = {
+  year: number
+  semester: '1' | '하계' | '2' | '동계'
+}
