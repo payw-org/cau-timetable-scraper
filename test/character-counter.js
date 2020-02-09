@@ -1,8 +1,8 @@
 /** @type {import('../src/types').RefinedLectures} */
-const lectures = require('../data/lectures-refined.json')
+const lectures = require('../data/lectures.json')
 
 let maxCollegeLength = 0
-let maxSubjectLength = 0
+let maxScheduleLength = 0
 
 lectures.forEach(lecture => {
   // if (lecture.grade !== '1')
@@ -11,10 +11,10 @@ lectures.forEach(lecture => {
     maxCollegeLength = lecture.college.length
   }
 
-  if (maxSubjectLength < lecture.subject.length) {
-    maxSubjectLength = lecture.subject.length
+  if (maxScheduleLength < lecture.schedule.length) {
+    maxScheduleLength = lecture.schedule.length
   }
 })
 
 console.log(`maxCollegeLength: ${maxCollegeLength}`)
-console.log(`maxSubjectLength: ${maxSubjectLength}`)
+console.log(`maxScheduleLength: ${maxScheduleLength}`)
