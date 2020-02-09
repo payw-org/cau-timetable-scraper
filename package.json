@@ -1,12 +1,12 @@
 {
   "name": "@payw/cau-timetable-scraper",
-  "version": "2.0.0-beta.3",
+  "version": "2.0.0-beta.4",
   "description": "A CAU Timetable Scraper",
   "main": "build/src/index.js",
   "repository": "https://github.com/paywteam/cau-timetable-scraper.git",
   "scripts": {
     "test-ts": "ts-node test/index.ts",
-    "test-node": "node build/test/index.js",
+    "test": "node build/test/index.js",
     "build": "npm run clear && tsc",
     "set-pkg-start": "node src/dev/modify-package.js",
     "set-pkg-dev": "cross-env NODE_ENV=development node src/dev/modify-package.js",
