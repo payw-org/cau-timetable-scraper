@@ -48,7 +48,7 @@ export const parse = (lectures: Lectures) => {
       refinedLecture.building = buildingMatch[1]
     }
 
-    const roomRegExp = /([0-9]+) *?호/g
+    const roomRegExp = /B?([0-9-]+) *?호/g
     const roomMatch = roomRegExp.exec(schedule)
     if (roomMatch) {
       refinedLecture.room = roomMatch[1]
