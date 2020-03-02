@@ -68,6 +68,8 @@ export const scrapeTimetable = async (
   page: Page,
   scrapeOptions: ScrapeOptions
 ) => {
+  const pendingXHR = new PendingXHR(page)
+
   Print.ln(
     `⚙️ Scrape options: ${scrapeOptions.year}, ${scrapeOptions.semester}`,
     true
@@ -75,6 +77,9 @@ export const scrapeTimetable = async (
   Print.ln('Navigating to timetable page...')
 
   await page.goto('https://mportal.cau.ac.kr/std/usk/sUskSif001/index.do')
+
+  // Wait for all XHR call in background
+  await pendingXHR.waitForAllXhrFinished()
 
   Print.done()
 

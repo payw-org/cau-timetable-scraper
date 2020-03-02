@@ -1,6 +1,6 @@
 {
   "name": "@payw/cau-timetable-scraper",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "A CAU Timetable Scraper",
   "main": "build/src/index.js",
   "repository": "https://github.com/paywteam/cau-timetable-scraper.git",
