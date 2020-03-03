@@ -1,0 +1,8 @@
+{
+  "name": "@payw/cau-timetable-scraper-types",
+  "version": "2.0.2",
+  "description": "Type definitions for CAU Timetable Scraper by PAYW",
+  "repository": "https://github.com/paywteam/cau-timetable-scraper.git",
+  "author": "PAYW",
+  "license": "MIT"
+}
