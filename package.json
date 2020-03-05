@@ -5,8 +5,8 @@
   "main": "build/src/index.js",
   "repository": "https://github.com/paywteam/cau-timetable-scraper.git",
   "scripts": {
-    "test-ts": "ts-node test/index.ts",
-    "test": "node build/test/index.js",
+    "test": "ts-node test/index.ts",
+    "test-build": "node build/test/index.js",
     "build": "npm run clear && tsc",
     "set-pkg-start": "node src/dev/modify-package.js",
     "set-pkg-dev": "cross-env NODE_ENV=development node src/dev/modify-package.js",
