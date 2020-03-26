@@ -1,6 +1,6 @@
 import puppeteer from 'puppeteer'
 import { signIn } from './sign-in'
-import { scrapeTimetable } from './scrape-timetable'
+import { loopCoverages } from './loop-coverages'
 import { Account, ScrapeOptions } from './types'
 import { atomize } from './atomize'
 import { parse } from './parse'
@@ -31,7 +31,7 @@ const CTTS = async (account: Account, scrapeOptions: ScrapeOptions) => {
   }
 
   await signIn(page, account)
-  const lectures = parse(atomize(await scrapeTimetable(page, scrapeOptions)))
+  const lectures = parse(atomize(await loopCoverages(page, scrapeOptions)))
 
   browser.close()
 

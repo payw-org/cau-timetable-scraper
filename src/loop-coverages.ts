@@ -14,13 +14,28 @@ const selectors = {
   searchButton: '.nb-search-submit button',
 }
 
-async function getOptionsFromSelect(page: Page, selectSelector: string) {
+const timetableUrl = 'https://mportal.cau.ac.kr/std/usk/sUskSif001/index.do'
+
+type Option = {
+  value: string
+  label: string
+}
+
+/**
+ * Get options from select element
+ * @param page
+ * @param selectSelector
+ */
+async function getOptionsFromSelect(
+  page: Page,
+  selectSelector: string
+): Promise<Option[]> {
   // let options: string[]
-  let options: { value: string; label: string }[]
+  let options: Option[]
 
   options = await page.evaluate((selectSelector: string) => {
     // const options: string[] = []
-    let options: { value: string; label: string }[] = []
+    let options: Option[] = []
     const selectElm = document.querySelector(
       selectSelector
     ) as HTMLSelectElement
@@ -64,7 +79,7 @@ async function clickSearch(page: Page) {
   await pendingXHR.waitForAllXhrFinished()
 }
 
-export const scrapeTimetable = async (
+export const loopCoverages = async (
   page: Page,
   scrapeOptions: ScrapeOptions
 ) => {
@@ -76,7 +91,7 @@ export const scrapeTimetable = async (
   )
   Print.ln('Navigating to timetable page...')
 
-  await page.goto('https://mportal.cau.ac.kr/std/usk/sUskSif001/index.do')
+  await page.goto(timetableUrl)
 
   // Wait for all XHR call in background
   await pendingXHR.waitForAllXhrFinished()
