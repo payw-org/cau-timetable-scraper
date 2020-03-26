@@ -27,6 +27,6 @@
   "author": "PAYW",
   "license": "MIT",
   "files": [
-    "build/src/"
+    "build"
   ]
 }
