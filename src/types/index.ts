@@ -1,19 +1,24 @@
+/**
+ * CAU Portal account
+ */
 export type Account = {
   id: string
   pw: string
 }
 
+/**
+ * Search scope
+ */
 export type Coverage = {
-  // year: string
-  // semester: string
-  // course: string
-  // campus: string
   college: string
   major: string
 }
 
 export type Coverages = Coverage[]
 
+/**
+ * Raw data scraped from website
+ */
 export interface Lecture {
   coverages: Coverages
   year: number
@@ -39,6 +44,9 @@ export type LectureKey = keyof Lecture
 
 export type Lectures = Lecture[]
 
+/**
+ * A class time
+ */
 export type Period = {
   day: 'mon' | 'tue' | 'wed' | 'thu' | 'fri' | 'sat' | 'sun'
   startH: number
@@ -47,6 +55,9 @@ export type Period = {
   endM: number
 }
 
+/**
+ * Parsed data included
+ */
 export interface RefinedLecture extends Lecture {
   building: string
   room: string
