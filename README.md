@@ -19,12 +19,30 @@
 % npm install @payw/cau-timetable-scraper
 ```
 
+## v2.1.0 Migration
+
+In `v2.1.0`, a new feature has been arrived where **CTTS** returns lectures along with the colleges and majors information separately.
+
+```ts
+// v2.0.x
+const lectures = CTTS({})
+
+// v2.1.x
+// Object destructuing
+const { lectures, colleges } = CTTS({})
+
+// Or
+const scrapeResult = CTTS({})
+const lectures = scrapeResult.lectures
+const colleges = scrapeResult.colleges
+```
+
 ## API
 
 ```ts
 import { CTTS } from '@payw/cau-timetable-scraper'
 
-const lectures = CTTS({
+const { lectures, colleges } = CTTS({
   id: 'CAU Portal ID',
   pw: 'password',
 })

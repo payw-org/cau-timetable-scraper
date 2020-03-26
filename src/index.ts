@@ -31,11 +31,16 @@ const CTTS = async (account: Account, scrapeOptions: ScrapeOptions) => {
   }
 
   await signIn(page, account)
-  const lectures = parse(atomize(await loopCoverages(page, scrapeOptions)))
+  const result = await loopCoverages(page, scrapeOptions)
+  const colleges = result.colleges
+  const lectures = parse(atomize(result.lectures))
 
   browser.close()
 
-  return lectures
+  return {
+    lectures,
+    colleges,
+  }
 }
 
 export { CTTS }

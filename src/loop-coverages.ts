@@ -99,6 +99,13 @@ export const loopCoverages = async (
   Print.done()
 
   let totalLectures: Lectures = []
+  const colleges: {
+    college: string
+    majors: {
+      majorName: string
+      majorCode: string
+    }[]
+  }[] = []
 
   // Only current year
   const yearOptions = await getOptionsFromSelect(page, selectors.yearSelect)
@@ -151,6 +158,16 @@ export const loopCoverages = async (
           selectors.majorSelect
         )
 
+        colleges.push({
+          college: collegeOption.label,
+          majors: majorOptions.map(option => {
+            return {
+              majorName: option.label,
+              majorCode: option.value,
+            }
+          }),
+        })
+
         for (
           let majorIndex = 0;
           majorIndex < majorOptions.length;
@@ -165,6 +182,7 @@ export const loopCoverages = async (
             true
           )
 
+          // Anaylize tables of each major
           const lectures = await analyzeTable(page, {
             year: yearOption.label.trim(),
             semester: semesterOption.label.trim(),
@@ -180,5 +198,8 @@ export const loopCoverages = async (
     }
   }
 
-  return totalLectures
+  return {
+    lectures: totalLectures,
+    colleges,
+  }
 }
