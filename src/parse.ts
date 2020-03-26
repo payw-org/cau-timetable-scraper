@@ -1,3 +1,7 @@
+/**
+ * Parse schedule string and find building, room, and periods.
+ */
+
 import { Lectures, Period, RefinedLecture } from './types'
 
 type KoreanDay = '월' | '화' | '수' | '목' | '금' | '토' | '일'
@@ -35,6 +39,8 @@ function intervalToTime(interval: number | string) {
 
 export const parse = (lectures: Lectures) => {
   const refinedLectures = lectures.map(lecture => {
+    // Convert to `RefinedLecture` interface
+    // and fill with empty properties
     const refinedLecture = lecture as RefinedLecture
     refinedLecture.building = ''
     refinedLecture.room = ''
