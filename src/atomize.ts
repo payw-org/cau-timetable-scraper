@@ -1,3 +1,8 @@
+/**
+ * There are multiple duplicate lecture data in different coverages.
+ * This script removes duplicate entries and merge them into coverages property.
+ */
+
 import { Lectures } from './types'
 
 export const atomize = (lectures: Lectures) => {
