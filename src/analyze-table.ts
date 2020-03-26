@@ -36,6 +36,7 @@ const analyzeTable = async (page: Page, options: Options) => {
       const lectures: Lectures = []
 
       rows.forEach(row => {
+        // Initialize a new lecture
         let newLecture: Lecture = {
           coverages: [],
           year: parseInt(options.year),
