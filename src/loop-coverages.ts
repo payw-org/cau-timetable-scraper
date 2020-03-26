@@ -179,7 +179,6 @@ export const loopCoverages = async (
       }
     }
   }
-  // }
 
   return totalLectures
 }
