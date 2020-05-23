@@ -13,16 +13,16 @@
     "clear": "rimraf build/*",
     "deploy": "npm run build && npm publish --access public"
   },
-  "dependencies": {
-    "pending-xhr-puppeteer": "^2.1.0",
-    "puppeteer": "^2.1.1"
-  },
   "devDependencies": {
-    "@types/puppeteer": "^2.0.1",
+    "@types/puppeteer": "^3.0.0",
     "cross-env": "^7.0.2",
     "rimraf": "^3.0.2",
-    "ts-node": "^8.8.1",
-    "typescript": "^3.8.3"
+    "ts-node": "^8.10.1",
+    "typescript": "^3.9.3"
+  },
+  "peerDependencies": {
+    "pending-xhr-puppeteer": "2.1.x",
+    "puppeteer": "3.x"
   },
   "author": "PAYW",
   "license": "MIT",
