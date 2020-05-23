@@ -16,7 +16,13 @@
 ## Installation
 
 ```zsh
-% npm install @payw/cau-timetable-scraper
+npm install @payw/cau-timetable-scraper
+```
+
+You also need to install Puppeteer-related modules as its peer dependencies.
+
+```zsh
+npm install puppeteer pending-xhr-puppeteer
 ```
 
 ## v2.1.0 Migration
