@@ -34,7 +34,7 @@ From `v2.1.0`, a new feature has been arrived where **CTTS** returns lectures al
 const lectures = CTTS({})
 
 // v2.1.x
-// Object destructuing
+// Object destructuring
 const { lectures, colleges } = CTTS({})
 
 // Or
