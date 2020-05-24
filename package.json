@@ -1,6 +1,6 @@
 {
   "name": "@payw/cau-timetable-scraper",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "A CAU Timetable Scraper",
   "main": "build/index.js",
   "repository": "https://github.com/paywteam/cau-timetable-scraper.git",
@@ -16,6 +16,8 @@
   "devDependencies": {
     "@types/puppeteer": "^3.0.0",
     "cross-env": "^7.0.2",
+    "pending-xhr-puppeteer": "^2.1.0",
+    "puppeteer": "^3.1.0",
     "rimraf": "^3.0.2",
     "ts-node": "^8.10.1",
     "typescript": "^3.9.3"

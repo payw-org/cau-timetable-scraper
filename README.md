@@ -25,9 +25,9 @@ You also need to install Puppeteer-related modules as its peer dependencies.
 npm install puppeteer pending-xhr-puppeteer
 ```
 
-## v2.1.0 Migration
+## v2.1.x Migration
 
-In `v2.1.0`, a new feature has been arrived where **CTTS** returns lectures along with the colleges and majors information separately.
+From `v2.1.0`, a new feature has been arrived where **CTTS** returns lectures along with the colleges and majors information separately.
 
 ```ts
 // v2.0.x
