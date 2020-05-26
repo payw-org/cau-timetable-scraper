@@ -43,7 +43,7 @@ const CTTS = async (account: Account, scrapeOptions: ScrapeOptions) => {
   const colleges = result.colleges
   const lectures = parse(atomize(result.lectures))
 
-  browser.close()
+  await browser.close()
 
   return {
     lectures,
