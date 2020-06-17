@@ -3,7 +3,7 @@
   "version": "2.1.2",
   "description": "A CAU Timetable Scraper",
   "main": "build/index.js",
-  "repository": "https://github.com/paywteam/cau-timetable-scraper.git",
+  "repository": "https://github.com/payw-org/cau-timetable-scraper.git",
   "scripts": {
     "test": "ts-node test/index.ts",
     "test-build": "node build/test/index.js",
