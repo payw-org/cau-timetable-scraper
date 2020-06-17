@@ -16,15 +16,15 @@
   "devDependencies": {
     "@types/puppeteer": "^3.0.0",
     "cross-env": "^7.0.2",
-    "pending-xhr-puppeteer": "^2.1.0",
-    "puppeteer": "^3.1.0",
+    "pending-xhr-puppeteer": "^2.3.2",
+    "puppeteer": "^4.0.0",
     "rimraf": "^3.0.2",
-    "ts-node": "^8.10.1",
-    "typescript": "^3.9.3"
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.5"
   },
   "peerDependencies": {
-    "pending-xhr-puppeteer": "2.1.x",
-    "puppeteer": "3.x"
+    "pending-xhr-puppeteer": "2.x",
+    "puppeteer": "4.x"
   },
   "author": "PAYW",
   "license": "MIT",
