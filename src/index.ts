@@ -19,14 +19,6 @@ const CTTS = async (account: Account, scrapeOptions: ScrapeOptions) => {
     height: 800,
   })
 
-  page.setMaxListeners(Infinity)
-
-  page.on('console', msg => {
-    for (let i = 0; i < msg.args().length; ++i) {
-      console.log(`${msg.args()[i]}`)
-    }
-  })
-
   if (!fs.existsSync('data')) {
     fs.mkdirSync('data')
   }
