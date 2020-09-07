@@ -1,8 +1,8 @@
 import { Page } from 'puppeteer'
 import Print from './utils/print'
-import { PendingXHR } from 'pending-xhr-puppeteer'
 import { analyzeTable } from './analyze-table'
 import { Lectures, ScrapeOptions } from './types'
+import { PendingXHR } from './modules/pending-xhr-puppeteer'
 
 const selectors = {
   yearSelect: '#sel_year',
@@ -41,7 +41,7 @@ async function getOptionsFromSelect(
     ) as HTMLSelectElement
 
     selectElm.querySelectorAll('option').forEach(option => {
-      if (!option.innerText.trim().includes('-')) {
+      if (!option.innerText.trim().startsWith('-')) {
         options.push({
           value: option.value,
           label: option.textContent?.trim() || '',
