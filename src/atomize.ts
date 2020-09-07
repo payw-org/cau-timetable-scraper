@@ -35,7 +35,14 @@ export const atomize = (lectures: Lectures) => {
 
     if (dupIndex !== -1) {
       currentLecture.coverages.forEach(coverage => {
-        lectures[dupIndex].coverages.push(coverage)
+        if (
+          lectures[dupIndex].coverages.findIndex(
+            ({ college, major }) =>
+              college === coverage.college && major === coverage.major
+          ) === -1
+        ) {
+          lectures[dupIndex].coverages.push(coverage)
+        }
       })
       lectures.splice(i, 1)
     }
