@@ -1,7 +1,7 @@
 import { Page } from 'puppeteer'
 import { Account } from './types'
-import { PendingXHR } from 'pending-xhr-puppeteer'
 import Print from './utils/print'
+import { PendingXHR } from './modules/pending-xhr-puppeteer'
 
 type signInSelectors = {
   idInput: string
@@ -12,7 +12,7 @@ type signInSelectors = {
 const selectors: signInSelectors = {
   idInput: '#txtUserID',
   pwInput: '#txtPwd',
-  loginBtn: '.btn-login'
+  loginBtn: '.btn-login',
 }
 
 export const signIn = async (page: Page, account: Account) => {
@@ -47,7 +47,7 @@ export const signIn = async (page: Page, account: Account) => {
   Print.ln('Signing in...')
 
   await page.waitForNavigation({
-    waitUntil: ['domcontentloaded', 'load', 'networkidle0', 'networkidle2']
+    waitUntil: ['domcontentloaded', 'load', 'networkidle0', 'networkidle2'],
   })
   await pendingXHR.waitForAllXhrFinished()
 
