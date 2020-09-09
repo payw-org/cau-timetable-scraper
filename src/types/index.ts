@@ -26,6 +26,7 @@ export interface Lecture {
   campus: string
   college: string
   major: string
+  majorCode: string
   grade: number
   course: string
   section: string

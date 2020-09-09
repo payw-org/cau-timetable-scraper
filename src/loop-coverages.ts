@@ -190,6 +190,7 @@ export const loopCoverages = async (
             campusCoverage: campusOption.label.trim(),
             collegeCoverage: collegeOption.label.trim(),
             majorCoverage: majorOption.label.trim(),
+            majorCode: majorOption.value,
           })
 
           totalLectures.push(...lectures)
