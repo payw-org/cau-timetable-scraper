@@ -68,21 +68,23 @@ The `CTTS` function returns an array of refined lectures.
 | campus    | `string`     |
 | college   | `string`     |
 | subject   | `string`     |
+| major     | `string`     |
+| majorCode | `string`     |
 | grade     | `string`     |
 | course    | `string`     |
 | section   | `string`     |
 | code      | `string`     |
-| time      | `string`     |
 | name      | `string`     |
 | credit    | `string`     |
+| time      | `string`     |
 | professor | `string`     |
 | closed    | `string`     |
 | schedule  | `string`     |
+| flex      | `string`     |
+| note      | `string`     |
 | building  | `string`     |
 | room      | `string`     |
 | periods   | `Period[]`   |
-| flex      | `string`     |
-| note      | `string`     |
 
 ### Coverage
 
