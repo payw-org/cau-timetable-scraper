@@ -83,6 +83,7 @@ const analyzeTable = async (page: Page, options: Options) => {
           // campus: options.campusCoverage,
           college: options.collegeCoverage,
           major: options.majorCoverage,
+          majorCode: options.majorCode,
         }
 
         for (let i = 0; i < columns.length; i += 1) {

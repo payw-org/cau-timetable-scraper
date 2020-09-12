@@ -12,6 +12,7 @@ export type Account = {
 export type Coverage = {
   college: string
   major: string
+  majorCode: string
 }
 
 export type Coverages = Coverage[]
