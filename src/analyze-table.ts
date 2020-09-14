@@ -45,7 +45,6 @@ const analyzeTable = async (page: Page, options: Options) => {
           campus: options.campusCoverage,
           college: '',
           major: '',
-          majorCode: '',
           grade: 0,
           course: '',
           section: '',
@@ -103,8 +102,6 @@ const analyzeTable = async (page: Page, options: Options) => {
           } else {
             newLecture[key] = data
           }
-
-          newLecture.majorCode = options.majorCode
         }
 
         newLecture.coverages.push(coverage)
