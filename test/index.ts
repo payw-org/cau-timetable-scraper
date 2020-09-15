@@ -4,7 +4,7 @@ import fs from 'fs'
 
 const test = async () => {
   const year = 2020
-  const semester = '1'
+  const semester = '2'
 
   const { lectures, colleges } = await CTTS(account, {
     year,
